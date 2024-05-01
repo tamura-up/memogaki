@@ -1,38 +1,31 @@
 [
   {
+    "objectID": "posts/cudacheck.html",
+    "href": "posts/cudacheck.html",
+    "title": "gpu check",
+    "section": "",
+    "text": "import torch\ntorch.cuda.is_available()\n\nTrue\n\n\n\n!nvidia-smi\n\nMon Apr  3 22:00:02 2023       \n+-----------------------------------------------------------------------------+\n| NVIDIA-SMI 525.105.17   Driver Version: 525.105.17   CUDA Version: 12.0     |\n|-------------------------------+----------------------+----------------------+\n| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n|                               |                      |               MIG M. |\n|===============================+======================+======================|\n|   0  NVIDIA GeForce ...  Off  | 00000000:01:00.0  On |                  N/A |\n| 30%   28C    P8    26W / 250W |    349MiB / 11264MiB |      3%      Default |\n|                               |                      |                  N/A |\n+-------------------------------+----------------------+----------------------+\n                                                                               \n+-----------------------------------------------------------------------------+\n| Processes:                                                                  |\n|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |\n|        ID   ID                                                   Usage      |\n|=============================================================================|\n+-----------------------------------------------------------------------------+\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Quarto Basics",
+    "section": "",
+    "text": "For a demonstration of a line plot on a polar axis, see Figure 1.\n\n\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1: A line plot on a polar axis\n\n\n\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "雑なメモ置き場",
     "section": "",
-    "text": "gpu check\n\n\n\n\n\n\n\n\n\n\n\nMay 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n私の chokudai search template\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\nMay 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nQuarto Basics\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nMay 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nApr 28, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\n\n\n\n\n\n\nQuarto Basics\n\n\n\n\n\n\n\n\n\n\n\nMay 22, 2021\n\n\nNorah Jones\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
-    "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
-    "objectID": "posts/2024-05-01-chokudaisearch.html",
-    "href": "posts/2024-05-01-chokudaisearch.html",
-    "title": "私の chokudai search template",
-    "section": "",
-    "text": "#[derive(PartialEq, Eq, Clone)]\nstruct State {\n    score: i64,\n}\nimpl State {\n    fn new() -&gt; Self {\n        todo!()\n    }\n}\n\nimpl Ord for State {\n    fn cmp(&self, other: &Self) -&gt; Ordering {\n        self.score.cmp(&other.score)\n    }\n}\n\nimpl PartialOrd for State {\n    fn partial_cmp(&self, other: &Self) -&gt; Option&lt;Ordering&gt; {\n        Some(self.cmp(other))\n    }\n}\n\nfn simple_chokudai_search(inp: &Input, timer: &Timer) {\n    let mut beams: Vec&lt;LimitedMaximumHeap&lt;State&gt;&gt; = vec![LimitedMaximumHeap::new(500); 51];\n\n    let mut iter = 0;\n    let mut best = 0;\n    beams[0].push(State::new());\n\n    'outer: loop {\n        iter += 1;\n        if timer.t() &gt;= 1.0 {\n            break;\n        }\n\n        for depth in 0..beams.len() {\n            if depth % 10 == 0 && timer.t() &gt;= 1.0 {\n                break 'outer;\n            }\n            if beams[depth].is_empty() {\n                continue;\n            }\n            // ここで複数回 pop すると 幅 &gt; 1 ってこと？\n            let state = beams[depth].pop().unwrap();\n            // TODO: なにか処理\n        }\n    }\n}"
+    "text": "Quarto Basics\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\n\n\n\n\n\n\nchokudai search template\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\n\n\n\n\n\n\ngpu check\n\n\n\n\n\n\nnotebook\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\n\n\n\n\n\n\nQuarto Basics\n\n\n\n\n\n\n\n\n\n\n\n2021 年 05 月 22 日\n\n\nNorah Jones\n\n\n\n\n\n\nNo matching items\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "雑なメモを置いています。メモ書きなので間違っていることも書いているでしょう。"
-  },
-  {
-    "objectID": "posts/cudacheck.html",
-    "href": "posts/cudacheck.html",
-    "title": "gpu check",
-    "section": "",
-    "text": "import torch\ntorch.cuda.is_available()\n\nTrue\n\n\n\n!nvidia-smi\n\nMon Apr  3 22:00:02 2023       \n+-----------------------------------------------------------------------------+\n| NVIDIA-SMI 525.105.17   Driver Version: 525.105.17   CUDA Version: 12.0     |\n|-------------------------------+----------------------+----------------------+\n| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n|                               |                      |               MIG M. |\n|===============================+======================+======================|\n|   0  NVIDIA GeForce ...  Off  | 00000000:01:00.0  On |                  N/A |\n| 30%   28C    P8    26W / 250W |    349MiB / 11264MiB |      3%      Default |\n|                               |                      |                  N/A |\n+-------------------------------+----------------------+----------------------+\n                                                                               \n+-----------------------------------------------------------------------------+\n| Processes:                                                                  |\n|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |\n|        ID   ID                                                   Usage      |\n|=============================================================================|\n+-----------------------------------------------------------------------------+"
+    "text": "雑なメモを置いています。メモ書きなので間違っていることも書いているでしょう。\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
     "objectID": "posts/test.html",
@@ -63,10 +56,10 @@
     "text": "3 Textures\n\nSmooth\nBumpy\nFuzzy"
   },
   {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Quarto Basics",
+    "objectID": "posts/2024-05-01-chokudaisearch.html",
+    "href": "posts/2024-05-01-chokudaisearch.html",
+    "title": "chokudai search template",
     "section": "",
-    "text": "For a demonstration of a line plot on a polar axis, see Figure 1.\n\n\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1: A line plot on a polar axis"
+    "text": "chokudai search の練習をしたのでメモ。\n#[derive(PartialEq, Eq, Clone)]\nstruct State {\n    score: i64,\n}\nimpl State {\n    fn new() -&gt; Self {\n        todo!()\n    }\n}\n\nimpl Ord for State {\n    fn cmp(&self, other: &Self) -&gt; Ordering {\n        self.score.cmp(&other.score)\n    }\n}\n\nimpl PartialOrd for State {\n    fn partial_cmp(&self, other: &Self) -&gt; Option&lt;Ordering&gt; {\n        Some(self.cmp(other))\n    }\n}\n\nfn simple_chokudai_search(inp: &Input, timer: &Timer) {\n    let mut beams: Vec&lt;LimitedMaximumHeap&lt;State&gt;&gt; = vec![LimitedMaximumHeap::new(500); 51];\n\n    let mut iter = 0;\n    let mut best = 0;\n    beams[0].push(State::new());\n\n    'outer: loop {\n        iter += 1;\n        if timer.t() &gt;= 1.0 {\n            break;\n        }\n\n        for depth in 0..beams.len() {\n            if depth % 10 == 0 && timer.t() &gt;= 1.0 {\n                break 'outer;\n            }\n            if beams[depth].is_empty() {\n                continue;\n            }\n            // ここで複数回 pop すると 幅 &gt; 1 ってこと？\n            let state = beams[depth].pop().unwrap();\n            // TODO: なにか処理\n        }\n    }\n}\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   }
 ]
