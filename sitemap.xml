@@ -1,27 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tamura-up.github.io/memogaki/posts/cudacheck.html</loc>
-    <lastmod>2024-05-01T15:33:11.706Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tamura-up.github.io/memogaki/posts/post-with-code/index.html</loc>
-    <lastmod>2024-05-01T04:10:53.628Z</lastmod>
-  </url>
-  <url>
     <loc>https://tamura-up.github.io/memogaki/index.html</loc>
-    <lastmod>2024-05-01T15:32:28.683Z</lastmod>
+    <lastmod>2024-05-01T15:36:55.368Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tamura-up.github.io/memogaki/posts/cudacheck.html</loc>
+    <lastmod>2024-05-01T15:36:55.368Z</lastmod>
   </url>
   <url>
     <loc>https://tamura-up.github.io/memogaki/about.html</loc>
-    <lastmod>2024-05-01T15:20:04.056Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tamura-up.github.io/memogaki/posts/test.html</loc>
-    <lastmod>2024-05-01T04:10:53.628Z</lastmod>
+    <lastmod>2024-05-01T15:36:55.356Z</lastmod>
   </url>
   <url>
     <loc>https://tamura-up.github.io/memogaki/posts/2024-05-01-chokudaisearch.html</loc>
-    <lastmod>2024-05-01T15:06:03.580Z</lastmod>
+    <lastmod>2024-05-01T15:36:55.368Z</lastmod>
   </url>
 </urlset>
