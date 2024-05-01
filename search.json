@@ -1,24 +1,17 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "雑なメモ置き場",
+    "section": "",
+    "text": "Quarto Basics\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nMay 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nApr 28, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\n\n\n\n\n\n\nQuarto Basics\n\n\n\n\n\n\n\n\n\n\n\nMay 22, 2021\n\n\nNorah Jones\n\n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "posts/welcome/index.html",
     "href": "posts/welcome/index.html",
     "title": "Welcome To My Blog",
     "section": "",
     "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
-    "objectID": "posts/test.html",
-    "href": "posts/test.html",
-    "title": "雑なメモ置き場",
-    "section": "",
-    "text": "そのままおけたりする？"
-  },
-  {
-    "objectID": "posts/test.html#markdown",
-    "href": "posts/test.html#markdown",
-    "title": "雑なメモ置き場",
-    "section": "",
-    "text": "そのままおけたりする？"
   },
   {
     "objectID": "about.html",
@@ -28,11 +21,32 @@
     "text": "雑なメモを置いています。メモ書きなので間違っていることも書いているでしょう。"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "雑なメモ置き場",
+    "objectID": "posts/test.html",
+    "href": "posts/test.html",
+    "title": "Quarto Basics",
     "section": "",
-    "text": "markdown\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuarto Basics\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nMay 1, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nApr 28, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Red\nGreen\nBlue"
+  },
+  {
+    "objectID": "posts/test.html#colors",
+    "href": "posts/test.html#colors",
+    "title": "Quarto Basics",
+    "section": "",
+    "text": "Red\nGreen\nBlue"
+  },
+  {
+    "objectID": "posts/test.html#shapes",
+    "href": "posts/test.html#shapes",
+    "title": "Quarto Basics",
+    "section": "2 Shapes",
+    "text": "2 Shapes\n\nSquare\nCircle\nTriangle"
+  },
+  {
+    "objectID": "posts/test.html#textures",
+    "href": "posts/test.html#textures",
+    "title": "Quarto Basics",
+    "section": "3 Textures",
+    "text": "3 Textures\n\nSmooth\nBumpy\nFuzzy"
   },
   {
     "objectID": "posts/post-with-code/index.html",
