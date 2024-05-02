@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "雑なメモ置き場",
     "section": "",
-    "text": "gpu check\n\n\n\n\n\n\nnotebook\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\n\n\n\n\n\n\nchokudai search template\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\nNo matching items\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+    "text": "AHC032 解説放送メモ\n\n\n\n\n\n\n\n\n\n\n\n2024 年 05 月 03 日\n\n\n\n\n\n\n\n\n\n\n\n\ngpu check\n\n\n\n\n\n\nnotebook\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\n\n\n\n\n\n\nchokudai search template\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\nNo matching items\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
     "objectID": "posts/cudacheck.html",
@@ -19,6 +19,41 @@
     "title": "About",
     "section": "",
     "text": "雑なメモを置いています。メモ書きなので間違っていることも書いているでしょう。\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
+    "objectID": "posts/2024-05-03_ahc032memo.html",
+    "href": "posts/2024-05-03_ahc032memo.html",
+    "title": "AHC032 解説放送メモ",
+    "section": "",
+    "text": "解説放送みたメモ"
+  },
+  {
+    "objectID": "posts/2024-05-03_ahc032memo.html#解説放送メモ",
+    "href": "posts/2024-05-03_ahc032memo.html#解説放送メモ",
+    "title": "AHC032 解説放送メモ",
+    "section": "解説放送メモ",
+    "text": "解説放送メモ\n\n解説放送: https://www.youtube.com/watch?v=9JS0wXXNiZk\neijirou さん解法: https://atcoder.jp/contests/ahc032/submissions?f.User=eijirou\nwata さん解法: https://atcoder.jp/contests/ahc032/submissions/52151408"
+  },
+  {
+    "objectID": "posts/2024-05-03_ahc032memo.html#考察",
+    "href": "posts/2024-05-03_ahc032memo.html#考察",
+    "title": "AHC032 解説放送メモ",
+    "section": "考察",
+    "text": "考察\n\n3*3 のマスをすべて MOD*0.8 以上にするためには 5^9 通り候補がほしい\n\n(ランダムに与えられたスタンプで 1 マスを MOD*4/5 以上にできる確率 1/5)\n\n近傍がなめらかでないので、焼きなましなどの局所探索は不適\n同じ 9 マスを操作するなら、左上の点は分散させたほうが場合の数が増える"
+  },
+  {
+    "objectID": "posts/2024-05-03_ahc032memo.html#ビームサーチ",
+    "href": "posts/2024-05-03_ahc032memo.html#ビームサーチ",
+    "title": "AHC032 解説放送メモ",
+    "section": "ビームサーチ",
+    "text": "ビームサーチ\n\n評価関数: \\(確定スコア + K * MOD * (1 - 進行度) * 残りの操作回数\\) (\\(K\\) はハイパーパラメータ)\n\n進行度が小さい場合は、後でより上手く揃えられるように操作回数を残したい\n\n\n\n「操作回数別でビームを分ける」とは\nwata さんの実装では操作回数別でビームを分けている。\nここでいうビームサーチは幅優先のビームサーチで「確定マス数」が深さに対応する。\n確定マス数を C とする。これを操作回数の基準として \\(\\pm W\\) 回の操作回数のズレを許容し、そのズレ幅ごとにビームをもつ。\n(例: コードの beam[W] はズレ幅 0 のビーム)\n\n\n揃えるマスの順\n35:30\n\n揃える順序は 3 マス揃えが連続しないほうが良い\nビームサーチの「確定スコア/確定マス数」を可視化することで確認している"
+  },
+  {
+    "objectID": "posts/2024-05-03_ahc032memo.html#高速化",
+    "href": "posts/2024-05-03_ahc032memo.html#高速化",
+    "title": "AHC032 解説放送メモ",
+    "section": "高速化",
+    "text": "高速化\n\n不要なスタンプをできるだけ減らす工夫をしている\nスタンプを右上の値で分類し、右上マスを良い値にできるスタンプの候補を絞り込めるようにするなど\n\n\nK 分木の話\nwata さん実装の Searcher がそれ。\nやることは「3マス揃え」で話していることとほとんど同じ。\nMOD を K 個の区間に分けて、スタンプの 1 マス目の値で K 分割、2 マス目の値で K 分割 …\nのように分割する木の深さが i マス目の分割となる K 分木を作り、良いスタンプの探索を高速にできるようにする。"
   },
   {
     "objectID": "posts/2024-05-01-chokudaisearch.html",

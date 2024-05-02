@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>雑なメモ置き場 - chokudai search template</title>
+<title>雑なメモ置き場 - AHC032 解説放送メモ</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -100,6 +66,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -136,11 +131,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">chokudai search template</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">ahc</div>
-              </div>
-                  </div>
+      <h1 class="title">AHC032 解説放送メモ</h1>
+                      </div>
   </div>
     
   
@@ -150,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">2024 年 05 月 01 日</p>
+        <p class="date">2024 年 05 月 03 日</p>
       </div>
     </div>
     
@@ -169,57 +161,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>chokudai search の練習をしたのでメモ。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">PartialEq</span><span class="op">,</span> <span class="bu">Eq</span><span class="op">,</span> <span class="bu">Clone</span><span class="at">)]</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> State <span class="op">{</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    score<span class="op">:</span> <span class="dt">i64</span><span class="op">,</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> State <span class="op">{</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> new() <span class="op">-&gt;</span> <span class="dt">Self</span> <span class="op">{</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="pp">todo!</span>()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> <span class="bu">Ord</span> <span class="cf">for</span> State <span class="op">{</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> cmp(<span class="op">&amp;</span><span class="kw">self</span><span class="op">,</span> other<span class="op">:</span> <span class="op">&amp;</span><span class="dt">Self</span>) <span class="op">-&gt;</span> Ordering <span class="op">{</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">self</span><span class="op">.</span>score<span class="op">.</span>cmp(<span class="op">&amp;</span>other<span class="op">.</span>score)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">impl</span> <span class="bu">PartialOrd</span> <span class="cf">for</span> State <span class="op">{</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> partial_cmp(<span class="op">&amp;</span><span class="kw">self</span><span class="op">,</span> other<span class="op">:</span> <span class="op">&amp;</span><span class="dt">Self</span>) <span class="op">-&gt;</span> <span class="dt">Option</span><span class="op">&lt;</span>Ordering<span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cn">Some</span>(<span class="kw">self</span><span class="op">.</span>cmp(other))</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> simple_chokudai_search(inp<span class="op">:</span> <span class="op">&amp;</span>Input<span class="op">,</span> timer<span class="op">:</span> <span class="op">&amp;</span>Timer) <span class="op">{</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> beams<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span>LimitedMaximumHeap<span class="op">&lt;</span>State<span class="op">&gt;&gt;</span> <span class="op">=</span> <span class="pp">vec!</span>[<span class="pp">LimitedMaximumHeap::</span>new(<span class="dv">500</span>)<span class="op">;</span> <span class="dv">51</span>]<span class="op">;</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> iter <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> best <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    beams[<span class="dv">0</span>]<span class="op">.</span>push(<span class="pp">State::</span>new())<span class="op">;</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="ot">'outer</span><span class="op">:</span> <span class="cf">loop</span> <span class="op">{</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        iter <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> timer<span class="op">.</span>t() <span class="op">&gt;=</span> <span class="dv">1.0</span> <span class="op">{</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> depth <span class="kw">in</span> <span class="dv">0</span><span class="op">..</span>beams<span class="op">.</span>len() <span class="op">{</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> depth <span class="op">%</span> <span class="dv">10</span> <span class="op">==</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> timer<span class="op">.</span>t() <span class="op">&gt;=</span> <span class="dv">1.0</span> <span class="op">{</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span> <span class="ot">'outer</span><span class="op">;</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> beams[depth]<span class="op">.</span>is_empty() <span class="op">{</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span><span class="op">;</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>            <span class="co">// ここで複数回 pop すると 幅 &gt; 1 ってこと？</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>            <span class="kw">let</span> state <span class="op">=</span> beams[depth]<span class="op">.</span>pop()<span class="op">.</span>unwrap()<span class="op">;</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>            <span class="co">// </span><span class="al">TODO</span><span class="co">: なにか処理</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>解説放送みたメモ</p>
+<section id="解説放送メモ" class="level2">
+<h2 class="anchored" data-anchor-id="解説放送メモ">解説放送メモ</h2>
+<ul>
+<li>解説放送: <a href="https://www.youtube.com/watch?v=9JS0wXXNiZk">https://www.youtube.com/watch?v=9JS0wXXNiZk</a></li>
+<li>eijirou さん解法: <a href="https://atcoder.jp/contests/ahc032/submissions?f.User=eijirou">https://atcoder.jp/contests/ahc032/submissions?f.User=eijirou</a></li>
+<li>wata さん解法: <a href="https://atcoder.jp/contests/ahc032/submissions/52151408">https://atcoder.jp/contests/ahc032/submissions/52151408</a></li>
+</ul>
+</section>
+<section id="考察" class="level2">
+<h2 class="anchored" data-anchor-id="考察">考察</h2>
+<ul>
+<li>3*3 のマスをすべて <code>MOD*0.8</code> 以上にするためには 5^9 通り候補がほしい
+<ul>
+<li>(ランダムに与えられたスタンプで 1 マスを <code>MOD*4/5</code> 以上にできる確率 <code>1/5</code>)</li>
+</ul></li>
+<li>近傍がなめらかでないので、焼きなましなどの局所探索は不適</li>
+<li>同じ 9 マスを操作するなら、左上の点は分散させたほうが場合の数が増える</li>
+</ul>
+</section>
+<section id="ビームサーチ" class="level2">
+<h2 class="anchored" data-anchor-id="ビームサーチ">ビームサーチ</h2>
+<ul>
+<li>評価関数: <span class="math inline">\(確定スコア + K * MOD * (1 - 進行度) * 残りの操作回数\)</span> (<span class="math inline">\(K\)</span> はハイパーパラメータ)
+<ul>
+<li>進行度が小さい場合は、後でより上手く揃えられるように操作回数を残したい</li>
+</ul></li>
+</ul>
+<section id="操作回数別でビームを分けるとは" class="level3">
+<h3 class="anchored" data-anchor-id="操作回数別でビームを分けるとは">「操作回数別でビームを分ける」とは</h3>
+<p>wata さんの実装では操作回数別でビームを分けている。<br>
+ここでいうビームサーチは幅優先のビームサーチで「確定マス数」が深さに対応する。<br>
+確定マス数を C とする。これを操作回数の基準として <span class="math inline">\(\pm W\)</span> 回の操作回数のズレを許容し、そのズレ幅ごとにビームをもつ。<br>
+(例: コードの <code>beam[W]</code> はズレ幅 0 のビーム)</p>
+</section>
+<section id="揃えるマスの順" class="level3">
+<h3 class="anchored" data-anchor-id="揃えるマスの順">揃えるマスの順</h3>
+<p><a href="https://www.youtube.com/live/9JS0wXXNiZk?si=84Nipkh2IA8TtWgq&amp;t=2128">35:30</a></p>
+<ul>
+<li>揃える順序は 3 マス揃えが連続しないほうが良い</li>
+<li>ビームサーチの「確定スコア/確定マス数」を可視化することで確認している</li>
+</ul>
+</section>
+</section>
+<section id="高速化" class="level2">
+<h2 class="anchored" data-anchor-id="高速化">高速化</h2>
+<ul>
+<li>不要なスタンプをできるだけ減らす工夫をしている</li>
+<li>スタンプを右上の値で分類し、右上マスを良い値にできるスタンプの候補を絞り込めるようにするなど</li>
+</ul>
+<section id="k-分木の話" class="level3">
+<h3 class="anchored" data-anchor-id="k-分木の話">K 分木の話</h3>
+<p>wata さん実装の <code>Searcher</code> がそれ。</p>
+<p>やることは「3マス揃え」で話していることとほとんど同じ。<br>
+MOD を K 個の区間に分けて、スタンプの 1 マス目の値で K 分割、2 マス目の値で K 分割 …<br>
+のように分割する木の深さが i マス目の分割となる K 分木を作り、良いスタンプの探索を高速にできるようにする。</p>
 
 
+</section>
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-copyright"><h2 class="anchored quarto-appendix-heading">Copyright</h2><div class="quarto-appendix-contents"><div>Copyright tamuraup. 2024. All Rights Reserved</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
