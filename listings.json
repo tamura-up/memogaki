@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/make_grid_example.html",
       "/posts/2024-05-03_ahc032memo.html",
       "/posts/cudacheck.html",
       "/posts/2024-05-01-chokudaisearch.html"
