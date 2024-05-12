@@ -2,26 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tamura-up.github.io/memogaki/index.html</loc>
-    <lastmod>2024-05-04T16:36:52.520Z</lastmod>
+    <lastmod>2024-05-12T11:21:26.299Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tamura-up.github.io/memogaki/posts/2024-05-12_tasuketsu.html</loc>
+    <lastmod>2024-05-12T11:21:26.299Z</lastmod>
   </url>
   <url>
     <loc>https://tamura-up.github.io/memogaki/posts/cudacheck.html</loc>
-    <lastmod>2024-05-04T16:36:52.520Z</lastmod>
+    <lastmod>2024-05-12T11:21:26.299Z</lastmod>
   </url>
   <url>
     <loc>https://tamura-up.github.io/memogaki/posts/2024-05-03_ahc032memo.html</loc>
-    <lastmod>2024-05-04T16:36:52.520Z</lastmod>
+    <lastmod>2024-05-12T11:21:26.299Z</lastmod>
   </url>
   <url>
     <loc>https://tamura-up.github.io/memogaki/about.html</loc>
-    <lastmod>2024-05-04T16:36:52.504Z</lastmod>
+    <lastmod>2024-05-12T11:21:26.287Z</lastmod>
   </url>
   <url>
     <loc>https://tamura-up.github.io/memogaki/posts/make_grid_example.html</loc>
-    <lastmod>2024-05-04T16:36:52.520Z</lastmod>
+    <lastmod>2024-05-12T11:21:26.299Z</lastmod>
   </url>
   <url>
     <loc>https://tamura-up.github.io/memogaki/posts/2024-05-01-chokudaisearch.html</loc>
-    <lastmod>2024-05-04T16:36:52.520Z</lastmod>
+    <lastmod>2024-05-12T11:21:26.299Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tamura-up.github.io/memogaki/posts/2024-05-11-seed_everything.html</loc>
+    <lastmod>2024-05-12T11:21:26.299Z</lastmod>
   </url>
 </urlset>
