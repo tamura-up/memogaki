@@ -17,5 +17,12 @@
 }
 
 .level2{
-    margin-top:20px;
+    margin-top: 1.5rem;
+}
+
+#quarto-document-content p:has(+ .cell){
+    margin-bottom: 1.5rem;
+}
+#quarto-document-content .cell + p{
+    padding-top: 1.5rem;
 }
