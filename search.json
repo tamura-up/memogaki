@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "雑なメモ置き場",
     "section": "",
-    "text": "numpy, pandas.DataFrame で多数決をとる\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 12 日\n\n\n\n\n\n\n\n\n\n\n\n\nPyTorch 学習結果の再現性確保\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 11 日\n\n\n\n\n\n\n\n\n\n\n\n\n画像グリッド描画サンプル\n\n\n\n\n\n\nnotebook\n\n\nimage\n\n\n\n\n\n\n\n\n\n2024 年 05 月 04 日\n\n\n\n\n\n\n\n\n\n\n\n\nAHC032 解説放送メモ\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 03 日\n\n\n\n\n\n\n\n\n\n\n\n\ngpu check\n\n\n\n\n\n\nnotebook\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\n\n\n\n\n\n\nchokudai search template\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\nNo matching items\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+    "text": "numpy, pandas.DataFrame で多数決をとる\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 12 日\n\n\n\n\n\n\n\n\n\n\n\n\nPyTorch 学習結果の再現性確保\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 11 日\n\n\n\n\n\n\n\n\n\n\n\n\nBCEWithLogitsLoss の確認\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 09 日\n\n\n\n\n\n\n\n\n\n\n\n\n画像グリッド描画サンプル\n\n\n\n\n\n\nnotebook\n\n\nimage\n\n\n\n\n\n\n\n\n\n2024 年 05 月 04 日\n\n\n\n\n\n\n\n\n\n\n\n\nAHC032 解説放送メモ\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 03 日\n\n\n\n\n\n\n\n\n\n\n\n\ngpu check\n\n\n\n\n\n\nnotebook\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\n\n\n\n\n\n\nchokudai search template\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\nNo matching items\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
     "objectID": "posts/2024-05-12_tasuketsu.html",
@@ -21,11 +21,25 @@
     "text": "pandas.DataFrame\nDataFrame にも mode 関数がある。\npandas.DataFrame.mode — pandas 2.2.2 ドキュメント\n\nimport pandas as pd\n\n\ndf=pd.DataFrame(a)\ndf\n\n\n\n\n\n\n\n\n\n0\n1\n2\n\n\n\n\n0\n1\n1\n2\n\n\n1\n3\n4\n5\n\n\n2\n1\n1\n1\n\n\n\n\n\n\n\n\n\ndf.mode(axis=1)\n\n\n\n\n\n\n\n\n\n0\n1\n2\n\n\n\n\n0\n1.0\nNaN\nNaN\n\n\n1\n3.0\n4.0\n5.0\n\n\n2\n1.0\nNaN\nNaN\n\n\n\n\n\n\n\n\n最頻値が複数あればその分の列が返るっぽい？ (ドキュメントに書いてなさそう)\n\ndf=pd.DataFrame(c)\ndf\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n\n\n\n\n0\n1\n1\n2\n1\n2\n3\n\n\n1\n3\n4\n5\n3\n4\n1\n\n\n2\n1\n1\n1\n1\n1\n2\n\n\n\n\n\n\n\n\n\ndf.mode(axis=1)\n\n\n\n\n\n\n\n\n\n0\n1\n\n\n\n\n0\n1.0\nNaN\n\n\n1\n3.0\n4.0\n\n\n2\n1.0\nNaN"
   },
   {
-    "objectID": "posts/cudacheck.html",
-    "href": "posts/cudacheck.html",
-    "title": "gpu check",
+    "objectID": "posts/2024-05-01-chokudaisearch.html",
+    "href": "posts/2024-05-01-chokudaisearch.html",
+    "title": "chokudai search template",
     "section": "",
-    "text": "import torch\ntorch.cuda.is_available()\n\nTrue\n\n\n\n!nvidia-smi\n\nMon Apr  3 22:00:02 2023       \n+-----------------------------------------------------------------------------+\n| NVIDIA-SMI 525.105.17   Driver Version: 525.105.17   CUDA Version: 12.0     |\n|-------------------------------+----------------------+----------------------+\n| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n|                               |                      |               MIG M. |\n|===============================+======================+======================|\n|   0  NVIDIA GeForce ...  Off  | 00000000:01:00.0  On |                  N/A |\n| 30%   28C    P8    26W / 250W |    349MiB / 11264MiB |      3%      Default |\n|                               |                      |                  N/A |\n+-------------------------------+----------------------+----------------------+\n                                                                               \n+-----------------------------------------------------------------------------+\n| Processes:                                                                  |\n|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |\n|        ID   ID                                                   Usage      |\n|=============================================================================|\n+-----------------------------------------------------------------------------+\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+    "text": "chokudai search の練習をしたのでメモ。\n#[derive(PartialEq, Eq, Clone)]\nstruct State {\n    score: i64,\n}\nimpl State {\n    fn new() -&gt; Self {\n        todo!()\n    }\n}\n\nimpl Ord for State {\n    fn cmp(&self, other: &Self) -&gt; Ordering {\n        self.score.cmp(&other.score)\n    }\n}\n\nimpl PartialOrd for State {\n    fn partial_cmp(&self, other: &Self) -&gt; Option&lt;Ordering&gt; {\n        Some(self.cmp(other))\n    }\n}\n\nfn simple_chokudai_search(inp: &Input, timer: &Timer) {\n    let mut beams: Vec&lt;LimitedMaximumHeap&lt;State&gt;&gt; = vec![LimitedMaximumHeap::new(500); 51];\n\n    let mut iter = 0;\n    let mut best = 0;\n    beams[0].push(State::new());\n\n    'outer: loop {\n        iter += 1;\n        if timer.t() &gt;= 1.0 {\n            break;\n        }\n\n        for depth in 0..beams.len() {\n            if depth % 10 == 0 && timer.t() &gt;= 1.0 {\n                break 'outer;\n            }\n            if beams[depth].is_empty() {\n                continue;\n            }\n            // ここで複数回 pop すると 幅 &gt; 1 ってこと？\n            let state = beams[depth].pop().unwrap();\n            // TODO: なにか処理\n        }\n    }\n}\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
+    "objectID": "posts/make_grid_example.html",
+    "href": "posts/make_grid_example.html",
+    "title": "画像グリッド描画サンプル",
+    "section": "",
+    "text": "複数枚の画像をグリッド描画するサンプルコードです。\ntorchvision の make_grid を使って描画します。 make_grid\n\nimport matplotlib.pyplot as plt\nimport random\nimport numpy as np\nimport albumentations as A\nfrom albumentations.pytorch import ToTensorV2\nfrom torchvision.utils import make_grid\nimport torch\n\n\nclass CFG:\n    H=32\n    W=64\n    row=3\n\n\ndef get_tranform():\n    \"\"\"画像をアスペクト比を変えずに CFG.H * CFG.W サイズに変換する\"\"\"\n    t = A.Compose([\n        A.LongestMaxSize(max_size=max(CFG.H,CFG.W)),\n        A.PadIfNeeded(min_height=CFG.H, min_width=CFG.W, border_mode=0, mask_value=0),\n        ToTensorV2(),\n    ])\n    return t\n\n\n画像の用意\n数枚ランダムに単色画像を作成する\n\ndef create_img(color,size):\n    \"\"\"単色画像の作成\"\"\"\n    return np.array(color,dtype=np.uint8)*np.ones((*size,3), dtype=np.uint8)\n\n\nimages= [create_img([random.randint(0,255) for _ in range(3)],(20,50)) for _ in range(20)]\n\n\n\ngrid の作成\n\nt=get_tranform()\nimages=[t(image=img)['image'] for img in images]\n\n\ntmp=torch.stack(images)\n\n\nres=make_grid(tmp,3,padding=2)\n\n\n# channel を一番最後に\ngrid_image=res.permute(1,2,0).numpy()\n\n\nplt.imshow(grid_image)\n\n\n\n\n\n\n\n\n\n\nsave\n\nfrom PIL import Image\n\n\nimage=Image.fromarray(grid_image)\n\n\nimage.save(\"test.jpg\")\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "雑なメモを置いています。メモ書きなので間違っていることも書いているでしょう。\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
     "objectID": "posts/2024-05-03_ahc032memo.html",
@@ -63,25 +77,18 @@
     "text": "高速化\n\n不要なスタンプをできるだけ減らす工夫をしている\nスタンプを右上の値で分類し、右上マスを良い値にできるスタンプの候補を絞り込めるようにするなど\n\n\nK 分木の話\nwata さん実装の Searcher がそれ。\nやることは「3マス揃え」で話していることとほとんど同じ。\nMOD を K 個の区間に分けて、スタンプの 1 マス目の値で K 分割、2 マス目の値で K 分割 …\nのように分割する、木の深さが i マス目の分割となる K 分木を作り、良いスタンプの探索を高速にできるようにする。"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "posts/cudacheck.html",
+    "href": "posts/cudacheck.html",
+    "title": "gpu check",
     "section": "",
-    "text": "雑なメモを置いています。メモ書きなので間違っていることも書いているでしょう。\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+    "text": "import torch\ntorch.cuda.is_available()\n\nTrue\n\n\n\n!nvidia-smi\n\nMon Apr  3 22:00:02 2023       \n+-----------------------------------------------------------------------------+\n| NVIDIA-SMI 525.105.17   Driver Version: 525.105.17   CUDA Version: 12.0     |\n|-------------------------------+----------------------+----------------------+\n| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n|                               |                      |               MIG M. |\n|===============================+======================+======================|\n|   0  NVIDIA GeForce ...  Off  | 00000000:01:00.0  On |                  N/A |\n| 30%   28C    P8    26W / 250W |    349MiB / 11264MiB |      3%      Default |\n|                               |                      |                  N/A |\n+-------------------------------+----------------------+----------------------+\n                                                                               \n+-----------------------------------------------------------------------------+\n| Processes:                                                                  |\n|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |\n|        ID   ID                                                   Usage      |\n|=============================================================================|\n+-----------------------------------------------------------------------------+\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
-    "objectID": "posts/make_grid_example.html",
-    "href": "posts/make_grid_example.html",
-    "title": "画像グリッド描画サンプル",
+    "objectID": "posts/2024-05-09_bcewithlogitsloss_check.html",
+    "href": "posts/2024-05-09_bcewithlogitsloss_check.html",
+    "title": "BCEWithLogitsLoss の確認",
     "section": "",
-    "text": "複数枚の画像をグリッド描画するサンプルコードです。\ntorchvision の make_grid を使って描画します。 make_grid\n\nimport matplotlib.pyplot as plt\nimport random\nimport numpy as np\nimport albumentations as A\nfrom albumentations.pytorch import ToTensorV2\nfrom torchvision.utils import make_grid\nimport torch\n\n\nclass CFG:\n    H=32\n    W=64\n    row=3\n\n\ndef get_tranform():\n    \"\"\"画像をアスペクト比を変えずに CFG.H * CFG.W サイズに変換する\"\"\"\n    t = A.Compose([\n        A.LongestMaxSize(max_size=max(CFG.H,CFG.W)),\n        A.PadIfNeeded(min_height=CFG.H, min_width=CFG.W, border_mode=0, mask_value=0),\n        ToTensorV2(),\n    ])\n    return t\n\n\n画像の用意\n数枚ランダムに単色画像を作成する\n\ndef create_img(color,size):\n    \"\"\"単色画像の作成\"\"\"\n    return np.array(color,dtype=np.uint8)*np.ones((*size,3), dtype=np.uint8)\n\n\nimages= [create_img([random.randint(0,255) for _ in range(3)],(20,50)) for _ in range(20)]\n\n\n\ngrid の作成\n\nt=get_tranform()\nimages=[t(image=img)['image'] for img in images]\n\n\ntmp=torch.stack(images)\n\n\nres=make_grid(tmp,3,padding=2)\n\n\n# channel を一番最後に\ngrid_image=res.permute(1,2,0).numpy()\n\n\nplt.imshow(grid_image)\n\n\n\n\n\n\n\n\n\n\nsave\n\nfrom PIL import Image\n\n\nimage=Image.fromarray(grid_image)\n\n\nimage.save(\"test.jpg\")\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
-  },
-  {
-    "objectID": "posts/2024-05-01-chokudaisearch.html",
-    "href": "posts/2024-05-01-chokudaisearch.html",
-    "title": "chokudai search template",
-    "section": "",
-    "text": "chokudai search の練習をしたのでメモ。\n#[derive(PartialEq, Eq, Clone)]\nstruct State {\n    score: i64,\n}\nimpl State {\n    fn new() -&gt; Self {\n        todo!()\n    }\n}\n\nimpl Ord for State {\n    fn cmp(&self, other: &Self) -&gt; Ordering {\n        self.score.cmp(&other.score)\n    }\n}\n\nimpl PartialOrd for State {\n    fn partial_cmp(&self, other: &Self) -&gt; Option&lt;Ordering&gt; {\n        Some(self.cmp(other))\n    }\n}\n\nfn simple_chokudai_search(inp: &Input, timer: &Timer) {\n    let mut beams: Vec&lt;LimitedMaximumHeap&lt;State&gt;&gt; = vec![LimitedMaximumHeap::new(500); 51];\n\n    let mut iter = 0;\n    let mut best = 0;\n    beams[0].push(State::new());\n\n    'outer: loop {\n        iter += 1;\n        if timer.t() &gt;= 1.0 {\n            break;\n        }\n\n        for depth in 0..beams.len() {\n            if depth % 10 == 0 && timer.t() &gt;= 1.0 {\n                break 'outer;\n            }\n            if beams[depth].is_empty() {\n                continue;\n            }\n            // ここで複数回 pop すると 幅 &gt; 1 ってこと？\n            let state = beams[depth].pop().unwrap();\n            // TODO: なにか処理\n        }\n    }\n}\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+    "text": "BCEWithLogitsLoss はマルチラベル分類のロスに使えることを知った\nBCEWithLogitsLoss\n\nimport numpy as np\nimport torch\n\n\ntarget = torch.ones([1, 10], dtype=torch.float32)  # 10 classes, batch size = 1\n# A prediction (logit)\noutput = torch.cat([torch.full([1, 5], 1.5),torch.full([1,5],1.0)],dim=1)\ncriterion = torch.nn.BCEWithLogitsLoss(reduction='none')\ncriterion(output, target)  # -log(sigmoid(output value))\n\ntensor([[0.2014, 0.2014, 0.2014, 0.2014, 0.2014, 0.3133, 0.3133, 0.3133, 0.3133,\n         0.3133]])\n\n\n\nsigmoid=torch.sigmoid(torch.Tensor([1.0,1.5]))\ntorch.log(sigmoid)\n\ntensor([-0.3133, -0.2014])\n\n\npos_weight は 各クラスで Positive/Negative のデータ数が不均衡な場合に設定すると良いらしい\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
     "objectID": "posts/2024-05-11-seed_everything.html",
