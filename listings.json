@@ -2,13 +2,14 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2024-05-20_compute_delta.html",
       "/posts/2024-05-12_tasuketsu.html",
       "/posts/2024-05-11-seed_everything.html",
       "/posts/2024-05-09_bcewithlogitsloss_check.html",
       "/posts/make_grid_example.html",
       "/posts/2024-05-03_ahc032memo.html",
-      "/posts/cudacheck.html",
-      "/posts/2024-05-01-chokudaisearch.html"
+      "/posts/2024-05-01-chokudaisearch.html",
+      "/posts/cudacheck.html"
     ]
   }
 ]
