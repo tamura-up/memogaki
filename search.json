@@ -56,18 +56,53 @@
     "text": "import torch\ntorch.cuda.is_available()\n\nTrue\n\n\n\n!nvidia-smi\n\nMon Apr  3 22:00:02 2023       \n+-----------------------------------------------------------------------------+\n| NVIDIA-SMI 525.105.17   Driver Version: 525.105.17   CUDA Version: 12.0     |\n|-------------------------------+----------------------+----------------------+\n| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n|                               |                      |               MIG M. |\n|===============================+======================+======================|\n|   0  NVIDIA GeForce ...  Off  | 00000000:01:00.0  On |                  N/A |\n| 30%   28C    P8    26W / 250W |    349MiB / 11264MiB |      3%      Default |\n|                               |                      |                  N/A |\n+-------------------------------+----------------------+----------------------+\n                                                                               \n+-----------------------------------------------------------------------------+\n| Processes:                                                                  |\n|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |\n|        ID   ID                                                   Usage      |\n|=============================================================================|\n+-----------------------------------------------------------------------------+\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
-    "objectID": "posts/2024-05-09_bcewithlogitsloss_check.html",
-    "href": "posts/2024-05-09_bcewithlogitsloss_check.html",
-    "title": "BCEWithLogitsLoss の確認",
+    "objectID": "posts/2024-06-07_ahc028memo.html",
+    "href": "posts/2024-06-07_ahc028memo.html",
+    "title": "AHC028 解説放送メモ",
     "section": "",
-    "text": "BCEWithLogitsLoss はマルチラベル分類のロスに使えることを知った\nBCEWithLogitsLoss\n\nimport numpy as np\nimport torch\n\n\ntarget = torch.ones([1, 10], dtype=torch.float32)  # 10 classes, batch size = 1\n# A prediction (logit)\noutput = torch.cat([torch.full([1, 5], 1.5),torch.full([1,5],1.0)],dim=1)\ncriterion = torch.nn.BCEWithLogitsLoss(reduction='none')\ncriterion(output, target)  # -log(sigmoid(output value))\n\ntensor([[0.2014, 0.2014, 0.2014, 0.2014, 0.2014, 0.3133, 0.3133, 0.3133, 0.3133,\n         0.3133]])\n\n\n\nsigmoid=torch.sigmoid(torch.Tensor([1.0,1.5]))\ntorch.log(sigmoid)\n\ntensor([-0.3133, -0.2014])\n\n\npos_weight は 各クラスで Positive/Negative のデータ数が不均衡な場合に設定すると良いらしい\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+    "text": "解説放送みたメモ"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "雑なメモ置き場",
+    "objectID": "posts/2024-06-07_ahc028memo.html#解説放送メモ",
+    "href": "posts/2024-06-07_ahc028memo.html#解説放送メモ",
+    "title": "AHC028 解説放送メモ",
+    "section": "解説放送メモ",
+    "text": "解説放送メモ\n\n解説放送: https://www.youtube.com/watch?v=5Znl6bqHyck"
+  },
+  {
+    "objectID": "posts/2024-06-07_ahc028memo.html#dp",
+    "href": "posts/2024-06-07_ahc028memo.html#dp",
+    "title": "AHC028 解説放送メモ",
+    "section": "DP",
+    "text": "DP\n\n文字の並びが決まると、最適な経路が DP で求まる\n\n単語の並びを決めた後にこれを利用して経路を求めても良い"
+  },
+  {
+    "objectID": "posts/2024-06-07_ahc028memo.html#貪欲の評価関数",
+    "href": "posts/2024-06-07_ahc028memo.html#貪欲の評価関数",
+    "title": "AHC028 解説放送メモ",
+    "section": "貪欲の評価関数",
+    "text": "貪欲の評価関数\n\nコスト: 問題分にある計算式でのコスト\nベースコスト: (単語間の移動コストを無視して)単語のみを考えた場合のコスト\n\nこれはコストの下界になっている\n\n\n評価関数を コスト - ベースコスト とすることで余分な移動量を評価できる。\n評価関数がこれだけだとベースコストの大きさが考慮されない？"
+  },
+  {
+    "objectID": "posts/2024-06-07_ahc028memo.html#ビームサーチ",
+    "href": "posts/2024-06-07_ahc028memo.html#ビームサーチ",
+    "title": "AHC028 解説放送メモ",
+    "section": "ビームサーチ",
+    "text": "ビームサーチ\n\n評価値: DP の最小値 - 使った単語のベースコストの和\n\nDP の最小値 は、DPテーブルから遷移先の最小値を選ぶことを繰り返して M 個目まで選択したときの最小値？ (推定コストの総和に該当？)\n1 度のコスト計算に O(M) はかかるので、単語数を減らしたほうがビーム幅を増やせる。\n\n単語のマージ\nbase(s1) + base(s2) &gt;= base(s1s2) + X であればマージする"
+  },
+  {
+    "objectID": "posts/2024-06-07_ahc028memo.html#焼きなまし",
+    "href": "posts/2024-06-07_ahc028memo.html#焼きなまし",
+    "title": "AHC028 解説放送メモ",
+    "section": "焼きなまし",
+    "text": "焼きなまし\n\n近傍\n\n単語の並びから 1 つとって、別の場所に挿入する\n有向グラフの TSP に一部分をまとめて移動させる近傍がある？ それを用いる\n\n反転操作が発生せず、向きが固定\n連続している部分は良い並びになっていることが多いはずだから、それを大きく崩さないような操作になっている"
+  },
+  {
+    "objectID": "posts/2024-05-01-chokudaisearch.html",
+    "href": "posts/2024-05-01-chokudaisearch.html",
+    "title": "chokudai search template",
     "section": "",
-    "text": "音声信号の “delta” という特徴量\n\n\n\n\n\n\n音声\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 20 日\n\n\n\n\n\n\n\n\n\n\n\n\nnumpy, pandas.DataFrame で多数決をとる\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 12 日\n\n\n\n\n\n\n\n\n\n\n\n\nPyTorch 学習結果の再現性確保\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 11 日\n\n\n\n\n\n\n\n\n\n\n\n\nBCEWithLogitsLoss の確認\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 09 日\n\n\n\n\n\n\n\n\n\n\n\n\n画像グリッド描画サンプル\n\n\n\n\n\n\nnotebook\n\n\nimage\n\n\n\n\n\n\n\n\n\n2024 年 05 月 04 日\n\n\n\n\n\n\n\n\n\n\n\n\nAHC032 解説放送メモ\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 03 日\n\n\n\n\n\n\n\n\n\n\n\n\nchokudai search template\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\n\n\n\n\n\n\ngpu check\n\n\n\n\n\n\nnotebook\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\nNo matching items\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+    "text": "chokudai search の練習をしたのでメモ。\n#[derive(PartialEq, Eq, Clone)]\nstruct State {\n    score: i64,\n}\nimpl State {\n    fn new() -&gt; Self {\n        todo!()\n    }\n}\n\nimpl Ord for State {\n    fn cmp(&self, other: &Self) -&gt; Ordering {\n        self.score.cmp(&other.score)\n    }\n}\n\nimpl PartialOrd for State {\n    fn partial_cmp(&self, other: &Self) -&gt; Option&lt;Ordering&gt; {\n        Some(self.cmp(other))\n    }\n}\n\nfn simple_chokudai_search(inp: &Input, timer: &Timer) {\n    let mut beams: Vec&lt;LimitedMaximumHeap&lt;State&gt;&gt; = vec![LimitedMaximumHeap::new(500); 51];\n\n    let mut iter = 0;\n    let mut best = 0;\n    beams[0].push(State::new());\n\n    'outer: loop {\n        iter += 1;\n        if timer.t() &gt;= 1.0 {\n            break;\n        }\n\n        for depth in 0..beams.len() {\n            if depth % 10 == 0 && timer.t() &gt;= 1.0 {\n                break 'outer;\n            }\n            if beams[depth].is_empty() {\n                continue;\n            }\n            // ここで複数回 pop すると 幅 &gt; 1 ってこと？\n            let state = beams[depth].pop().unwrap();\n            // TODO: なにか処理\n        }\n    }\n}\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
     "objectID": "about.html",
@@ -77,11 +112,18 @@
     "text": "雑なメモを置いています。メモ書きなので間違っていることも書いているでしょう。\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
-    "objectID": "posts/2024-05-01-chokudaisearch.html",
-    "href": "posts/2024-05-01-chokudaisearch.html",
-    "title": "chokudai search template",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "雑なメモ置き場",
     "section": "",
-    "text": "chokudai search の練習をしたのでメモ。\n#[derive(PartialEq, Eq, Clone)]\nstruct State {\n    score: i64,\n}\nimpl State {\n    fn new() -&gt; Self {\n        todo!()\n    }\n}\n\nimpl Ord for State {\n    fn cmp(&self, other: &Self) -&gt; Ordering {\n        self.score.cmp(&other.score)\n    }\n}\n\nimpl PartialOrd for State {\n    fn partial_cmp(&self, other: &Self) -&gt; Option&lt;Ordering&gt; {\n        Some(self.cmp(other))\n    }\n}\n\nfn simple_chokudai_search(inp: &Input, timer: &Timer) {\n    let mut beams: Vec&lt;LimitedMaximumHeap&lt;State&gt;&gt; = vec![LimitedMaximumHeap::new(500); 51];\n\n    let mut iter = 0;\n    let mut best = 0;\n    beams[0].push(State::new());\n\n    'outer: loop {\n        iter += 1;\n        if timer.t() &gt;= 1.0 {\n            break;\n        }\n\n        for depth in 0..beams.len() {\n            if depth % 10 == 0 && timer.t() &gt;= 1.0 {\n                break 'outer;\n            }\n            if beams[depth].is_empty() {\n                continue;\n            }\n            // ここで複数回 pop すると 幅 &gt; 1 ってこと？\n            let state = beams[depth].pop().unwrap();\n            // TODO: なにか処理\n        }\n    }\n}\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+    "text": "AHC028 解説放送メモ\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 06 月 07 日\n\n\n\n\n\n\n\n\n\n\n\n\n音声信号の “delta” という特徴量\n\n\n\n\n\n\n音声\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 20 日\n\n\n\n\n\n\n\n\n\n\n\n\nnumpy, pandas.DataFrame で多数決をとる\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 12 日\n\n\n\n\n\n\n\n\n\n\n\n\nPyTorch 学習結果の再現性確保\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 11 日\n\n\n\n\n\n\n\n\n\n\n\n\nBCEWithLogitsLoss の確認\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 09 日\n\n\n\n\n\n\n\n\n\n\n\n\n画像グリッド描画サンプル\n\n\n\n\n\n\nnotebook\n\n\nimage\n\n\n\n\n\n\n\n\n\n2024 年 05 月 04 日\n\n\n\n\n\n\n\n\n\n\n\n\nAHC032 解説放送メモ\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 03 日\n\n\n\n\n\n\n\n\n\n\n\n\nchokudai search template\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\n\n\n\n\n\n\ngpu check\n\n\n\n\n\n\nnotebook\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\nNo matching items\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
+    "objectID": "posts/2024-05-09_bcewithlogitsloss_check.html",
+    "href": "posts/2024-05-09_bcewithlogitsloss_check.html",
+    "title": "BCEWithLogitsLoss の確認",
+    "section": "",
+    "text": "BCEWithLogitsLoss はマルチラベル分類のロスに使えることを知った\nBCEWithLogitsLoss\n\nimport numpy as np\nimport torch\n\n\ntarget = torch.ones([1, 10], dtype=torch.float32)  # 10 classes, batch size = 1\n# A prediction (logit)\noutput = torch.cat([torch.full([1, 5], 1.5),torch.full([1,5],1.0)],dim=1)\ncriterion = torch.nn.BCEWithLogitsLoss(reduction='none')\ncriterion(output, target)  # -log(sigmoid(output value))\n\ntensor([[0.2014, 0.2014, 0.2014, 0.2014, 0.2014, 0.3133, 0.3133, 0.3133, 0.3133,\n         0.3133]])\n\n\n\nsigmoid=torch.sigmoid(torch.Tensor([1.0,1.5]))\ntorch.log(sigmoid)\n\ntensor([-0.3133, -0.2014])\n\n\npos_weight は 各クラスで Positive/Negative のデータ数が不均衡な場合に設定すると良いらしい\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
   },
   {
     "objectID": "posts/make_grid_example.html",
@@ -116,6 +158,6 @@
     "href": "posts/2024-05-12_tasuketsu.html#pandas.dataframe",
     "title": "numpy, pandas.DataFrame で多数決をとる",
     "section": "pandas.DataFrame",
-    "text": "pandas.DataFrame\nDataFrame にも mode 関数がある。\npandas.DataFrame.mode — pandas 2.2.2 ドキュメント\n\nimport pandas as pd\n\n\ndf=pd.DataFrame(a)\ndf\n\n\n\n\n\n\n\n\n\n0\n1\n2\n\n\n\n\n0\n1\n1\n2\n\n\n1\n3\n4\n5\n\n\n2\n1\n1\n1\n\n\n\n\n\n\n\n\n\ndf.mode(axis=1)\n\n\n\n\n\n\n\n\n\n0\n1\n2\n\n\n\n\n0\n1.0\nNaN\nNaN\n\n\n1\n3.0\n4.0\n5.0\n\n\n2\n1.0\nNaN\nNaN\n\n\n\n\n\n\n\n\n最頻値が複数あればその分の列が返るっぽい？ (ドキュメントに書いてなさそう)\n\ndf=pd.DataFrame(c)\ndf\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n\n\n\n\n0\n1\n1\n2\n1\n2\n3\n\n\n1\n3\n4\n5\n3\n4\n1\n\n\n2\n1\n1\n1\n1\n1\n2\n\n\n\n\n\n\n\n\n\ndf.mode(axis=1)\n\n\n\n\n\n\n\n\n\n0\n1\n\n\n\n\n0\n1.0\nNaN\n\n\n1\n3.0\n4.0\n\n\n2\n1.0\nNaN"
+    "text": "pandas.DataFrame\nDataFrame にも mode 関数がある。\npandas.DataFrame.mode — pandas 2.2.2 ドキュメント\n\nimport pandas as pd\n\n\ndf=pd.DataFrame(a)\ndf\n\n\n\n\n\n\n\n\n0\n1\n2\n\n\n\n\n0\n1\n1\n2\n\n\n1\n3\n4\n5\n\n\n2\n1\n1\n1\n\n\n\n\n\n\n\n\ndf.mode(axis=1)\n\n\n\n\n\n\n\n\n0\n1\n2\n\n\n\n\n0\n1.0\nNaN\nNaN\n\n\n1\n3.0\n4.0\n5.0\n\n\n2\n1.0\nNaN\nNaN\n\n\n\n\n\n\n\n最頻値が複数あればその分の列が返るっぽい？ (ドキュメントに書いてなさそう)\n\ndf=pd.DataFrame(c)\ndf\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n\n\n\n\n0\n1\n1\n2\n1\n2\n3\n\n\n1\n3\n4\n5\n3\n4\n1\n\n\n2\n1\n1\n1\n1\n1\n2\n\n\n\n\n\n\n\n\ndf.mode(axis=1)\n\n\n\n\n\n\n\n\n0\n1\n\n\n\n\n0\n1.0\nNaN\n\n\n1\n3.0\n4.0\n\n\n2\n1.0\nNaN"
   }
 ]
