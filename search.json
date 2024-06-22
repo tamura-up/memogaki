@@ -1,5 +1,159 @@
 [
   {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "雑なメモを置いています。メモ書きなので間違っていることも書いているでしょう。\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
+    "objectID": "posts/make_grid_example.html",
+    "href": "posts/make_grid_example.html",
+    "title": "画像グリッド描画サンプル",
+    "section": "",
+    "text": "複数枚の画像をグリッド描画するサンプルコードです。\ntorchvision の make_grid を使って描画します。 make_grid\n\nimport matplotlib.pyplot as plt\nimport random\nimport numpy as np\nimport albumentations as A\nfrom albumentations.pytorch import ToTensorV2\nfrom torchvision.utils import make_grid\nimport torch\n\n\nclass CFG:\n    H=32\n    W=64\n    row=3\n\n\ndef get_tranform():\n    \"\"\"画像をアスペクト比を変えずに CFG.H * CFG.W サイズに変換する\"\"\"\n    t = A.Compose([\n        A.LongestMaxSize(max_size=max(CFG.H,CFG.W)),\n        A.PadIfNeeded(min_height=CFG.H, min_width=CFG.W, border_mode=0, mask_value=0),\n        ToTensorV2(),\n    ])\n    return t\n\n\n画像の用意\n数枚ランダムに単色画像を作成する\n\ndef create_img(color,size):\n    \"\"\"単色画像の作成\"\"\"\n    return np.array(color,dtype=np.uint8)*np.ones((*size,3), dtype=np.uint8)\n\n\nimages= [create_img([random.randint(0,255) for _ in range(3)],(20,50)) for _ in range(20)]\n\n\n\ngrid の作成\n\nt=get_tranform()\nimages=[t(image=img)['image'] for img in images]\n\n\ntmp=torch.stack(images)\n\n\nres=make_grid(tmp,3,padding=2)\n\n\n# channel を一番最後に\ngrid_image=res.permute(1,2,0).numpy()\n\n\nplt.imshow(grid_image)\n\n\n\n\n\n\n\n\n\n\nsave\n\nfrom PIL import Image\n\n\nimage=Image.fromarray(grid_image)\n\n\nimage.save(\"test.jpg\")\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
+    "objectID": "posts/cudacheck.html",
+    "href": "posts/cudacheck.html",
+    "title": "gpu check",
+    "section": "",
+    "text": "import torch\ntorch.cuda.is_available()\n\nTrue\n\n\n\n!nvidia-smi\n\nMon Apr  3 22:00:02 2023       \n+-----------------------------------------------------------------------------+\n| NVIDIA-SMI 525.105.17   Driver Version: 525.105.17   CUDA Version: 12.0     |\n|-------------------------------+----------------------+----------------------+\n| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n|                               |                      |               MIG M. |\n|===============================+======================+======================|\n|   0  NVIDIA GeForce ...  Off  | 00000000:01:00.0  On |                  N/A |\n| 30%   28C    P8    26W / 250W |    349MiB / 11264MiB |      3%      Default |\n|                               |                      |                  N/A |\n+-------------------------------+----------------------+----------------------+\n                                                                               \n+-----------------------------------------------------------------------------+\n| Processes:                                                                  |\n|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |\n|        ID   ID                                                   Usage      |\n|=============================================================================|\n+-----------------------------------------------------------------------------+\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
+    "objectID": "posts/2024-05-09_bcewithlogitsloss_check.html",
+    "href": "posts/2024-05-09_bcewithlogitsloss_check.html",
+    "title": "BCEWithLogitsLoss の確認",
+    "section": "",
+    "text": "BCEWithLogitsLoss はマルチラベル分類のロスに使えることを知った\nBCEWithLogitsLoss\n\nimport numpy as np\nimport torch\n\n\ntarget = torch.ones([1, 10], dtype=torch.float32)  # 10 classes, batch size = 1\n# A prediction (logit)\noutput = torch.cat([torch.full([1, 5], 1.5),torch.full([1,5],1.0)],dim=1)\ncriterion = torch.nn.BCEWithLogitsLoss(reduction='none')\ncriterion(output, target)  # -log(sigmoid(output value))\n\ntensor([[0.2014, 0.2014, 0.2014, 0.2014, 0.2014, 0.3133, 0.3133, 0.3133, 0.3133,\n         0.3133]])\n\n\n\nsigmoid=torch.sigmoid(torch.Tensor([1.0,1.5]))\ntorch.log(sigmoid)\n\ntensor([-0.3133, -0.2014])\n\n\npos_weight は 各クラスで Positive/Negative のデータ数が不均衡な場合に設定すると良いらしい\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
+    "objectID": "posts/2024-05-03_ahc032memo.html",
+    "href": "posts/2024-05-03_ahc032memo.html",
+    "title": "AHC032 解説放送メモ",
+    "section": "",
+    "text": "解説放送みたメモ"
+  },
+  {
+    "objectID": "posts/2024-05-03_ahc032memo.html#解説放送メモ",
+    "href": "posts/2024-05-03_ahc032memo.html#解説放送メモ",
+    "title": "AHC032 解説放送メモ",
+    "section": "解説放送メモ",
+    "text": "解説放送メモ\n\n解説放送: https://www.youtube.com/watch?v=9JS0wXXNiZk\neijirou さん解法: https://atcoder.jp/contests/ahc032/submissions?f.User=eijirou\nwata さん解法: https://atcoder.jp/contests/ahc032/submissions/52151408"
+  },
+  {
+    "objectID": "posts/2024-05-03_ahc032memo.html#考察",
+    "href": "posts/2024-05-03_ahc032memo.html#考察",
+    "title": "AHC032 解説放送メモ",
+    "section": "考察",
+    "text": "考察\n\n3*3 のマスをすべて MOD*0.8 以上にするためには 5^9 通り候補がほしい\n\n(ランダムに与えられたスタンプで 1 マスを MOD*4/5 以上にできる確率 1/5)\n\n近傍がなめらかでないので、焼きなましなどの局所探索は不適\n同じ 9 マスを操作するなら、左上の点は分散させたほうが場合の数が増える"
+  },
+  {
+    "objectID": "posts/2024-05-03_ahc032memo.html#ビームサーチ",
+    "href": "posts/2024-05-03_ahc032memo.html#ビームサーチ",
+    "title": "AHC032 解説放送メモ",
+    "section": "ビームサーチ",
+    "text": "ビームサーチ\n\n評価関数: \\(確定スコア + K * MOD * (1 - 進行度) * 残りの操作回数\\) (\\(K\\) はハイパーパラメータ)\n\n進行度が小さい場合は、後でより上手く揃えられるように操作回数を残したい\n\n\n\n「操作回数別でビームを分ける」とは\nwata さんの実装では操作回数別でビームを分けている。\nここでいうビームサーチは幅優先のビームサーチで「確定マス数」が深さに対応する。\n確定マス数を C とする。これを操作回数の基準として \\(\\pm W\\) 回の操作回数のズレを許容し、そのズレ幅ごとにビームをもつ。\n(例: コードの beam[W] はズレ幅 0 のビーム)\n\n\n揃えるマスの順\n35:30\n\n揃える順序は 3 マス揃えが連続しないほうが良い\nビームサーチの「確定スコア/確定マス数」を可視化することで確認している"
+  },
+  {
+    "objectID": "posts/2024-05-03_ahc032memo.html#高速化",
+    "href": "posts/2024-05-03_ahc032memo.html#高速化",
+    "title": "AHC032 解説放送メモ",
+    "section": "高速化",
+    "text": "高速化\n\n不要なスタンプをできるだけ減らす工夫をしている\nスタンプを右上の値で分類し、右上マスを良い値にできるスタンプの候補を絞り込めるようにするなど\n\n\nK 分木の話\nwata さん実装の Searcher がそれ。\nやることは「3マス揃え」で話していることとほとんど同じ。\nMOD を K 個の区間に分けて、スタンプの 1 マス目の値で K 分割、2 マス目の値で K 分割 …\nのように分割する、木の深さが i マス目の分割となる K 分木を作り、良いスタンプの探索を高速にできるようにする。"
+  },
+  {
+    "objectID": "posts/2024-05-11-seed_everything.html",
+    "href": "posts/2024-05-11-seed_everything.html",
+    "title": "PyTorch 学習結果の再現性確保",
+    "section": "",
+    "text": "Pytorch Lightning で学習したとき、seed_everything で乱数固定すれば、同じ学習結果が得られると思っていたが実際にはそうでなかった。\n調べてみると、\nの設定も必要そうだった。Reproducibility — PyTorch 2.3 documentation\nこの 2 つを設定することで、内部で使用されるアルゴリズムを固定化できるとのこと。\n上記参考に以下の関数を呼ぶことで、同じ学習結果が得られるようになった。"
+  },
+  {
+    "objectID": "posts/2024-05-11-seed_everything.html#その他参考",
+    "href": "posts/2024-05-11-seed_everything.html#その他参考",
+    "title": "PyTorch 学習結果の再現性確保",
+    "section": "その他参考",
+    "text": "その他参考\n\nhttps://qiita.com/north_redwing/items/1e153139125d37829d2d#cuda-convolution-benchmarking"
+  },
+  {
+    "objectID": "posts/2024-05-20_compute_delta.html",
+    "href": "posts/2024-05-20_compute_delta.html",
+    "title": "音声信号の “delta” という特徴量",
+    "section": "",
+    "text": "音声信号に delta という特徴量があるらしい。 Practical Cryptography\nあまり良くわかっていませんが、各周波数帯での軌跡を特徴量にするイメージでしょうか？ 各周波数帯のデータと [1.0] * time をたたみ込み演算をしたもの特徴量とするようです。\nkaggle でも過去の上位解法に使用されているようです。[4-th place solution] Inference and Training tips\nまた torchaudio にも実装されています。torchaudio.functional.compute_deltas — Torchaudio 2.2.0.dev20240520 documentation\n実装例"
+  },
+  {
+    "objectID": "posts/2024-05-20_compute_delta.html#一応演算結果確認しておく",
+    "href": "posts/2024-05-20_compute_delta.html#一応演算結果確認しておく",
+    "title": "音声信号の “delta” という特徴量",
+    "section": "一応演算結果確認しておく",
+    "text": "一応演算結果確認しておく\n\nimport numpy as np\nimport torch\n\n\n# kaggle の solution notebook より\ndef compute_deltas(\n        specgram: torch.Tensor, win_length: int = 5, mode: str = \"replicate\"\n) -&gt; torch.Tensor:\n    device = specgram.device\n    dtype = specgram.dtype\n\n    # pack batch\n    shape = specgram.size()\n    specgram = specgram.reshape(1, -1, shape[-1])\n\n    assert win_length &gt;= 3\n\n    n = (win_length - 1) // 2\n\n    # twice sum of integer squared\n    denom = n * (n + 1) * (2 * n + 1) / 3\n\n    specgram = torch.nn.functional.pad(specgram, (n, n), mode=mode)\n\n    kernel = torch.arange(-n, n + 1, 1, device=device, dtype=dtype).repeat(\n        specgram.shape[1], 1, 1\n    )\n    output = (\n            torch.nn.functional.conv1d(specgram, kernel, groups=specgram.shape[1]) / denom\n    )\n\n    # unpack batch\n    output = output.reshape(shape)\n\n    return output\n\n\nx=torch.rand([1, 10]) # dim (freq, time)\nprint(x.shape)\nprint(x)\n\ntorch.Size([1, 10])\ntensor([[0.6760, 0.4193, 0.8303, 0.1316, 0.1804, 0.4828, 0.7212, 0.0631, 0.1529,\n         0.5410]])\n\n\n\ndelta=compute_deltas(x)\nprint(delta.shape)\nprint(delta)\n\ntorch.Size([1, 10])\ntensor([[ 0.0052, -0.0934, -0.1279, -0.0523,  0.0133,  0.0404, -0.0475, -0.0452,\n          0.0117,  0.1344]])\n\n\n\nn=2\ntmp=torch.nn.functional.pad(x, (2, 2), mode='replicate')\ndenom = n * (n + 1) * (2 * n + 1) / 3\n\n\nfor p in range(n,n+10):\n    sm=0.0\n    for i in range(1,n+1):\n        sm+=(-tmp[0][p-i] +tmp[0][p+i])*i\n    print(sm/denom)\n\ntensor(0.0052)\ntensor(-0.0934)\ntensor(-0.1279)\ntensor(-0.0523)\ntensor(0.0133)\ntensor(0.0404)\ntensor(-0.0475)\ntensor(-0.0452)\ntensor(0.0117)\ntensor(0.1344)"
+  },
+  {
+    "objectID": "posts/2024-05-12_tasuketsu.html",
+    "href": "posts/2024-05-12_tasuketsu.html",
+    "title": "numpy, pandas.DataFrame で多数決をとる",
+    "section": "",
+    "text": "多数決を取ったメモ。 今回は行ごとの最頻値を求める。\nscipy.stats.mode を使うと楽。\nscipy.stats.mode — SciPy v1.13.0 Manual\nimport numpy as np\nimport scipy.stats as stats\na=np.array([[1,1,2],[3,4,5],[1,1,1]])\na\n\narray([[1, 1, 2],\n       [3, 4, 5],\n       [1, 1, 1]])\nb=np.array([[1,2,3],[3,4,1],[1,1,2]])\nb\n\narray([[1, 2, 3],\n       [3, 4, 1],\n       [1, 1, 2]])\nc=np.hstack((a,b))\nc\n\narray([[1, 1, 2, 1, 2, 3],\n       [3, 4, 5, 3, 4, 1],\n       [1, 1, 1, 1, 1, 2]])\nstats.mode(a,axis=1,keepdims=True)[0]\n\narray([[1],\n       [3],\n       [1]])\nstats.mode(b,axis=1,keepdims=True)[0]\n\narray([[1],\n       [1],\n       [1]])\nstats.mode(c,axis=1,keepdims=True)[0]\n\narray([[1],\n       [3],\n       [1]])"
+  },
+  {
+    "objectID": "posts/2024-05-12_tasuketsu.html#pandas.dataframe",
+    "href": "posts/2024-05-12_tasuketsu.html#pandas.dataframe",
+    "title": "numpy, pandas.DataFrame で多数決をとる",
+    "section": "pandas.DataFrame",
+    "text": "pandas.DataFrame\nDataFrame にも mode 関数がある。\npandas.DataFrame.mode — pandas 2.2.2 ドキュメント\n\nimport pandas as pd\n\n\ndf=pd.DataFrame(a)\ndf\n\n\n\n\n\n\n\n\n0\n1\n2\n\n\n\n\n0\n1\n1\n2\n\n\n1\n3\n4\n5\n\n\n2\n1\n1\n1\n\n\n\n\n\n\n\n\ndf.mode(axis=1)\n\n\n\n\n\n\n\n\n0\n1\n2\n\n\n\n\n0\n1.0\nNaN\nNaN\n\n\n1\n3.0\n4.0\n5.0\n\n\n2\n1.0\nNaN\nNaN\n\n\n\n\n\n\n\n最頻値が複数あればその分の列が返るっぽい？ (ドキュメントに書いてなさそう)\n\ndf=pd.DataFrame(c)\ndf\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n\n\n\n\n0\n1\n1\n2\n1\n2\n3\n\n\n1\n3\n4\n5\n3\n4\n1\n\n\n2\n1\n1\n1\n1\n1\n2\n\n\n\n\n\n\n\n\ndf.mode(axis=1)\n\n\n\n\n\n\n\n\n0\n1\n\n\n\n\n0\n1.0\nNaN\n\n\n1\n3.0\n4.0\n\n\n2\n1.0\nNaN"
+  },
+  {
+    "objectID": "posts/2024-05-01-chokudaisearch.html",
+    "href": "posts/2024-05-01-chokudaisearch.html",
+    "title": "chokudai search template",
+    "section": "",
+    "text": "chokudai search の練習をしたのでメモ。\n#[derive(PartialEq, Eq, Clone)]\nstruct State {\n    score: i64,\n}\nimpl State {\n    fn new() -&gt; Self {\n        todo!()\n    }\n}\n\nimpl Ord for State {\n    fn cmp(&self, other: &Self) -&gt; Ordering {\n        self.score.cmp(&other.score)\n    }\n}\n\nimpl PartialOrd for State {\n    fn partial_cmp(&self, other: &Self) -&gt; Option&lt;Ordering&gt; {\n        Some(self.cmp(other))\n    }\n}\n\nfn simple_chokudai_search(inp: &Input, timer: &Timer) {\n    let mut beams: Vec&lt;LimitedMaximumHeap&lt;State&gt;&gt; = vec![LimitedMaximumHeap::new(500); 51];\n\n    let mut iter = 0;\n    let mut best = 0;\n    beams[0].push(State::new());\n\n    'outer: loop {\n        iter += 1;\n        if timer.t() &gt;= 1.0 {\n            break;\n        }\n\n        for depth in 0..beams.len() {\n            if depth % 10 == 0 && timer.t() &gt;= 1.0 {\n                break 'outer;\n            }\n            if beams[depth].is_empty() {\n                continue;\n            }\n            // ここで複数回 pop すると 幅 &gt; 1 ってこと？\n            let state = beams[depth].pop().unwrap();\n            // TODO: なにか処理\n        }\n    }\n}\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
+  },
+  {
+    "objectID": "posts/2024-06-07_ahc028memo.html",
+    "href": "posts/2024-06-07_ahc028memo.html",
+    "title": "AHC028 解説放送メモ",
+    "section": "",
+    "text": "解説放送みたメモ"
+  },
+  {
+    "objectID": "posts/2024-06-07_ahc028memo.html#解説放送メモ",
+    "href": "posts/2024-06-07_ahc028memo.html#解説放送メモ",
+    "title": "AHC028 解説放送メモ",
+    "section": "解説放送メモ",
+    "text": "解説放送メモ\n\n解説放送: https://www.youtube.com/watch?v=5Znl6bqHyck"
+  },
+  {
+    "objectID": "posts/2024-06-07_ahc028memo.html#dp",
+    "href": "posts/2024-06-07_ahc028memo.html#dp",
+    "title": "AHC028 解説放送メモ",
+    "section": "DP",
+    "text": "DP\n\n文字の並びが決まると、最適な経路が DP で求まる\n\n単語の並びを決めた後にこれを利用して経路を求めても良い"
+  },
+  {
+    "objectID": "posts/2024-06-07_ahc028memo.html#貪欲の評価関数",
+    "href": "posts/2024-06-07_ahc028memo.html#貪欲の評価関数",
+    "title": "AHC028 解説放送メモ",
+    "section": "貪欲の評価関数",
+    "text": "貪欲の評価関数\n\nコスト: 問題分にある計算式でのコスト\nベースコスト: (単語間の移動コストを無視して)単語のみを考えた場合のコスト\n\nこれはコストの下界になっている\n\n\n評価関数を コスト - ベースコスト とすることで余分な移動量を評価できる。\n評価関数がこれだけだとベースコストの大きさが考慮されない？"
+  },
+  {
+    "objectID": "posts/2024-06-07_ahc028memo.html#ビームサーチ",
+    "href": "posts/2024-06-07_ahc028memo.html#ビームサーチ",
+    "title": "AHC028 解説放送メモ",
+    "section": "ビームサーチ",
+    "text": "ビームサーチ\n\n評価値: DP の最小値 - 使った単語のベースコストの和\n\nDP の最小値 は、DPテーブルから遷移先の最小値を選ぶことを繰り返して M 個目まで選択したときの最小値？ (推定コストの総和に該当？)\n1 度のコスト計算に O(M) はかかるので、単語数を減らしたほうがビーム幅を増やせる。\n\n単語のマージ\nbase(s1) + base(s2) &gt;= base(s1s2) + X であればマージする"
+  },
+  {
+    "objectID": "posts/2024-06-07_ahc028memo.html#焼きなまし",
+    "href": "posts/2024-06-07_ahc028memo.html#焼きなまし",
+    "title": "AHC028 解説放送メモ",
+    "section": "焼きなまし",
+    "text": "焼きなまし\n\n近傍\n\n単語の並びから 1 つとって、別の場所に挿入する\n有向グラフの TSP に一部分をまとめて移動させる近傍がある？ それを用いる\n\n反転操作が発生せず、向きが固定\n連続している部分は良い並びになっていることが多いはずだから、それを大きく崩さないような操作になっている"
+  },
+  {
     "objectID": "posts/2024-06-17_sqlcontest-01-10.html",
     "href": "posts/2024-06-17_sqlcontest-01-10.html",
     "title": "SQLコンテストの問題 4 を解く(第 1〜10 回)",
@@ -60,7 +214,7 @@
     "href": "posts/2024-06-17_sqlcontest-01-10.html#第8回-問題4",
     "title": "SQLコンテストの問題 4 を解く(第 1〜10 回)",
     "section": "第8回 問題4",
-    "text": "第8回 問題4\n問題文に”設定”とあって何をするのかわかりにくいが、更新クエリを問われている。 WITH 句とUPDATE を一緒に使えることを知った。\nUPDATE item SET ITEM_POPULAR_RANK=0;\nWITH t1 AS (SELECT D.ITEM_CODE\n                 , MAX(ORDER_DATE) DT\n                 , SUM(ORDER_QTY) qty\n            FROM ORDERS O\n                 JOIN ORDERS_DTL D ON D.ORDER_NO = O.ORDER_NO\n            WHERE O.ORDER_DATE BETWEEN '2023-04-01' AND '2023-06-30'\n            GROUP BY D.ITEM_CODE)\n   , t2 AS (SELECT t1.*\n                 , RANK() OVER (ORDER BY qty DESC, dt DESC,ITEM_CODE DESC\n        ) rnk\n            FROM t1)\nUPDATE item\nSET ITEM_POPULAR_RANK = (SELECT t2.rnk FROM t2 WHERE t2.ITEM_CODE = item.ITEM_CODE)\nWHERE item.ITEM_CODE IN (SELECT t2.ITEM_CODE FROM t2);"
+    "text": "第8回 問題4\n問題文に”設定”とあって何をするのかわかりにくいが、更新クエリを問われている。 副問合せを使った UPDATE 忘れていたので勉強になった。\nUPDATE item SET ITEM_POPULAR_RANK=0;\nWITH t1 AS (SELECT D.ITEM_CODE\n                 , MAX(ORDER_DATE) DT\n                 , SUM(ORDER_QTY) qty\n            FROM ORDERS O\n                 JOIN ORDERS_DTL D ON D.ORDER_NO = O.ORDER_NO\n            WHERE O.ORDER_DATE BETWEEN '2023-04-01' AND '2023-06-30'\n            GROUP BY D.ITEM_CODE)\n   , t2 AS (SELECT t1.*\n                 , RANK() OVER (ORDER BY qty DESC, dt DESC,ITEM_CODE DESC\n        ) rnk\n            FROM t1)\nUPDATE item\nSET ITEM_POPULAR_RANK = t2.rnk\nFROM t2\nWHERE t2.ITEM_CODE = item.ITEM_CODE;"
   },
   {
     "objectID": "posts/2024-06-17_sqlcontest-01-10.html#第9回-問題4",
@@ -77,164 +231,10 @@
     "text": "第10回 問題4\nいろいろやり方はありそうな問題。今回は UNION ALL で入れ子にして1つ前のステップのデータを確認するようにした。\n他には RANK を使って timestamp 順にランクをとり、STEP {i} と一致しているところまでをカウントするなどが考えられる。\nSTEP5 のデータがない場合でも STEP5 | 0 と表示できるように SEQ テーブルを使うことに注意。\nWITH t1 AS (SELECT lo.SESSION_ID, lo.PROCESS_ID, lo.EX_TIMESTAMP, MAX(lo2.EX_TIMESTAMP) pre_t\n            FROM PROCESS_LOG lo\n                 LEFT JOIN PROCESS_LOG lo2 ON lo.SESSION_ID = lo2.SESSION_ID AND lo.EX_TIMESTAMP &gt; lo2.EX_TIMESTAMP\n            GROUP BY lo.SESSION_ID, lo.PROCESS_ID, lo.EX_TIMESTAMP)\n   , t2 AS (SELECT t1.*, 1 step\n            FROM t1\n            WHERE PROCESS_ID = 'STEP1'\n              AND pre_t IS NULL\n            UNION ALL\n            SELECT t1.*, t2.step + 1\n            FROM t1\n                 JOIN t2 ON t1.SESSION_ID = t2.SESSION_ID AND t1.PROCESS_ID = 'STEP' || (t2.step + 1) AND t1.pre_t = t2.EX_TIMESTAMP\n            WHERE step &lt; 5)\n   , seq AS (SELECT 1 AS no UNION ALL SELECT no + 1 AS no FROM SEQ WHERE no + 1 &lt;= 5)\nSELECT 'STEP' || seq.no PROCESS, COUNT(session_id) CNT\nFROM seq\n     LEFT JOIN t2 ON 'STEP' || seq.no = t2.PROCESS_ID\nGROUP BY seq.no\nORDER BY 1"
   },
   {
-    "objectID": "posts/2024-05-12_tasuketsu.html",
-    "href": "posts/2024-05-12_tasuketsu.html",
-    "title": "numpy, pandas.DataFrame で多数決をとる",
-    "section": "",
-    "text": "多数決を取ったメモ。 今回は行ごとの最頻値を求める。\nscipy.stats.mode を使うと楽。\nscipy.stats.mode — SciPy v1.13.0 Manual\nimport numpy as np\nimport scipy.stats as stats\na=np.array([[1,1,2],[3,4,5],[1,1,1]])\na\n\narray([[1, 1, 2],\n       [3, 4, 5],\n       [1, 1, 1]])\nb=np.array([[1,2,3],[3,4,1],[1,1,2]])\nb\n\narray([[1, 2, 3],\n       [3, 4, 1],\n       [1, 1, 2]])\nc=np.hstack((a,b))\nc\n\narray([[1, 1, 2, 1, 2, 3],\n       [3, 4, 5, 3, 4, 1],\n       [1, 1, 1, 1, 1, 2]])\nstats.mode(a,axis=1,keepdims=True)[0]\n\narray([[1],\n       [3],\n       [1]])\nstats.mode(b,axis=1,keepdims=True)[0]\n\narray([[1],\n       [1],\n       [1]])\nstats.mode(c,axis=1,keepdims=True)[0]\n\narray([[1],\n       [3],\n       [1]])"
-  },
-  {
-    "objectID": "posts/2024-05-12_tasuketsu.html#pandas.dataframe",
-    "href": "posts/2024-05-12_tasuketsu.html#pandas.dataframe",
-    "title": "numpy, pandas.DataFrame で多数決をとる",
-    "section": "pandas.DataFrame",
-    "text": "pandas.DataFrame\nDataFrame にも mode 関数がある。\npandas.DataFrame.mode — pandas 2.2.2 ドキュメント\n\nimport pandas as pd\n\n\ndf=pd.DataFrame(a)\ndf\n\n\n\n\n\n\n\n\n0\n1\n2\n\n\n\n\n0\n1\n1\n2\n\n\n1\n3\n4\n5\n\n\n2\n1\n1\n1\n\n\n\n\n\n\n\n\ndf.mode(axis=1)\n\n\n\n\n\n\n\n\n0\n1\n2\n\n\n\n\n0\n1.0\nNaN\nNaN\n\n\n1\n3.0\n4.0\n5.0\n\n\n2\n1.0\nNaN\nNaN\n\n\n\n\n\n\n\n最頻値が複数あればその分の列が返るっぽい？ (ドキュメントに書いてなさそう)\n\ndf=pd.DataFrame(c)\ndf\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n\n\n\n\n0\n1\n1\n2\n1\n2\n3\n\n\n1\n3\n4\n5\n3\n4\n1\n\n\n2\n1\n1\n1\n1\n1\n2\n\n\n\n\n\n\n\n\ndf.mode(axis=1)\n\n\n\n\n\n\n\n\n0\n1\n\n\n\n\n0\n1.0\nNaN\n\n\n1\n3.0\n4.0\n\n\n2\n1.0\nNaN"
-  },
-  {
-    "objectID": "posts/2024-05-11-seed_everything.html",
-    "href": "posts/2024-05-11-seed_everything.html",
-    "title": "PyTorch 学習結果の再現性確保",
-    "section": "",
-    "text": "Pytorch Lightning で学習したとき、seed_everything で乱数固定すれば、同じ学習結果が得られると思っていたが実際にはそうでなかった。\n調べてみると、\nの設定も必要そうだった。Reproducibility — PyTorch 2.3 documentation\nこの 2 つを設定することで、内部で使用されるアルゴリズムを固定化できるとのこと。\n上記参考に以下の関数を呼ぶことで、同じ学習結果が得られるようになった。"
-  },
-  {
-    "objectID": "posts/2024-05-11-seed_everything.html#その他参考",
-    "href": "posts/2024-05-11-seed_everything.html#その他参考",
-    "title": "PyTorch 学習結果の再現性確保",
-    "section": "その他参考",
-    "text": "その他参考\n\nhttps://qiita.com/north_redwing/items/1e153139125d37829d2d#cuda-convolution-benchmarking"
-  },
-  {
-    "objectID": "posts/make_grid_example.html",
-    "href": "posts/make_grid_example.html",
-    "title": "画像グリッド描画サンプル",
-    "section": "",
-    "text": "複数枚の画像をグリッド描画するサンプルコードです。\ntorchvision の make_grid を使って描画します。 make_grid\n\nimport matplotlib.pyplot as plt\nimport random\nimport numpy as np\nimport albumentations as A\nfrom albumentations.pytorch import ToTensorV2\nfrom torchvision.utils import make_grid\nimport torch\n\n\nclass CFG:\n    H=32\n    W=64\n    row=3\n\n\ndef get_tranform():\n    \"\"\"画像をアスペクト比を変えずに CFG.H * CFG.W サイズに変換する\"\"\"\n    t = A.Compose([\n        A.LongestMaxSize(max_size=max(CFG.H,CFG.W)),\n        A.PadIfNeeded(min_height=CFG.H, min_width=CFG.W, border_mode=0, mask_value=0),\n        ToTensorV2(),\n    ])\n    return t\n\n\n画像の用意\n数枚ランダムに単色画像を作成する\n\ndef create_img(color,size):\n    \"\"\"単色画像の作成\"\"\"\n    return np.array(color,dtype=np.uint8)*np.ones((*size,3), dtype=np.uint8)\n\n\nimages= [create_img([random.randint(0,255) for _ in range(3)],(20,50)) for _ in range(20)]\n\n\n\ngrid の作成\n\nt=get_tranform()\nimages=[t(image=img)['image'] for img in images]\n\n\ntmp=torch.stack(images)\n\n\nres=make_grid(tmp,3,padding=2)\n\n\n# channel を一番最後に\ngrid_image=res.permute(1,2,0).numpy()\n\n\nplt.imshow(grid_image)\n\n\n\n\n\n\n\n\n\n\nsave\n\nfrom PIL import Image\n\n\nimage=Image.fromarray(grid_image)\n\n\nimage.save(\"test.jpg\")\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
-  },
-  {
-    "objectID": "posts/2024-05-09_bcewithlogitsloss_check.html",
-    "href": "posts/2024-05-09_bcewithlogitsloss_check.html",
-    "title": "BCEWithLogitsLoss の確認",
-    "section": "",
-    "text": "BCEWithLogitsLoss はマルチラベル分類のロスに使えることを知った\nBCEWithLogitsLoss\n\nimport numpy as np\nimport torch\n\n\ntarget = torch.ones([1, 10], dtype=torch.float32)  # 10 classes, batch size = 1\n# A prediction (logit)\noutput = torch.cat([torch.full([1, 5], 1.5),torch.full([1,5],1.0)],dim=1)\ncriterion = torch.nn.BCEWithLogitsLoss(reduction='none')\ncriterion(output, target)  # -log(sigmoid(output value))\n\ntensor([[0.2014, 0.2014, 0.2014, 0.2014, 0.2014, 0.3133, 0.3133, 0.3133, 0.3133,\n         0.3133]])\n\n\n\nsigmoid=torch.sigmoid(torch.Tensor([1.0,1.5]))\ntorch.log(sigmoid)\n\ntensor([-0.3133, -0.2014])\n\n\npos_weight は 各クラスで Positive/Negative のデータ数が不均衡な場合に設定すると良いらしい\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "雑なメモ置き場",
     "section": "",
     "text": "SQLコンテストの問題 4 を解く(第 1〜10 回)\n\n\n\n\n\n\nSQL\n\n\n\n\n\n\n\n\n\n2024 年 06 月 17 日\n\n\n\n\n\n\n\n\n\n\n\n\nAHC028 解説放送メモ\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 06 月 07 日\n\n\n\n\n\n\n\n\n\n\n\n\n音声信号の “delta” という特徴量\n\n\n\n\n\n\n音声\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 20 日\n\n\n\n\n\n\n\n\n\n\n\n\nnumpy, pandas.DataFrame で多数決をとる\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 12 日\n\n\n\n\n\n\n\n\n\n\n\n\nPyTorch 学習結果の再現性確保\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 11 日\n\n\n\n\n\n\n\n\n\n\n\n\nBCEWithLogitsLoss の確認\n\n\n\n\n\n\nml\n\n\n\n\n\n\n\n\n\n2024 年 05 月 09 日\n\n\n\n\n\n\n\n\n\n\n\n\n画像グリッド描画サンプル\n\n\n\n\n\n\nnotebook\n\n\nimage\n\n\n\n\n\n\n\n\n\n2024 年 05 月 04 日\n\n\n\n\n\n\n\n\n\n\n\n\nAHC032 解説放送メモ\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 03 日\n\n\n\n\n\n\n\n\n\n\n\n\nchokudai search template\n\n\n\n\n\n\nahc\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\n\n\n\n\n\n\ngpu check\n\n\n\n\n\n\nnotebook\n\n\n\n\n\n\n\n\n\n2024 年 05 月 01 日\n\n\n\n\n\n\nNo matching items\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "雑なメモを置いています。メモ書きなので間違っていることも書いているでしょう。\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
-  },
-  {
-    "objectID": "posts/2024-05-01-chokudaisearch.html",
-    "href": "posts/2024-05-01-chokudaisearch.html",
-    "title": "chokudai search template",
-    "section": "",
-    "text": "chokudai search の練習をしたのでメモ。\n#[derive(PartialEq, Eq, Clone)]\nstruct State {\n    score: i64,\n}\nimpl State {\n    fn new() -&gt; Self {\n        todo!()\n    }\n}\n\nimpl Ord for State {\n    fn cmp(&self, other: &Self) -&gt; Ordering {\n        self.score.cmp(&other.score)\n    }\n}\n\nimpl PartialOrd for State {\n    fn partial_cmp(&self, other: &Self) -&gt; Option&lt;Ordering&gt; {\n        Some(self.cmp(other))\n    }\n}\n\nfn simple_chokudai_search(inp: &Input, timer: &Timer) {\n    let mut beams: Vec&lt;LimitedMaximumHeap&lt;State&gt;&gt; = vec![LimitedMaximumHeap::new(500); 51];\n\n    let mut iter = 0;\n    let mut best = 0;\n    beams[0].push(State::new());\n\n    'outer: loop {\n        iter += 1;\n        if timer.t() &gt;= 1.0 {\n            break;\n        }\n\n        for depth in 0..beams.len() {\n            if depth % 10 == 0 && timer.t() &gt;= 1.0 {\n                break 'outer;\n            }\n            if beams[depth].is_empty() {\n                continue;\n            }\n            // ここで複数回 pop すると 幅 &gt; 1 ってこと？\n            let state = beams[depth].pop().unwrap();\n            // TODO: なにか処理\n        }\n    }\n}\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
-  },
-  {
-    "objectID": "posts/2024-06-07_ahc028memo.html",
-    "href": "posts/2024-06-07_ahc028memo.html",
-    "title": "AHC028 解説放送メモ",
-    "section": "",
-    "text": "解説放送みたメモ"
-  },
-  {
-    "objectID": "posts/2024-06-07_ahc028memo.html#解説放送メモ",
-    "href": "posts/2024-06-07_ahc028memo.html#解説放送メモ",
-    "title": "AHC028 解説放送メモ",
-    "section": "解説放送メモ",
-    "text": "解説放送メモ\n\n解説放送: https://www.youtube.com/watch?v=5Znl6bqHyck"
-  },
-  {
-    "objectID": "posts/2024-06-07_ahc028memo.html#dp",
-    "href": "posts/2024-06-07_ahc028memo.html#dp",
-    "title": "AHC028 解説放送メモ",
-    "section": "DP",
-    "text": "DP\n\n文字の並びが決まると、最適な経路が DP で求まる\n\n単語の並びを決めた後にこれを利用して経路を求めても良い"
-  },
-  {
-    "objectID": "posts/2024-06-07_ahc028memo.html#貪欲の評価関数",
-    "href": "posts/2024-06-07_ahc028memo.html#貪欲の評価関数",
-    "title": "AHC028 解説放送メモ",
-    "section": "貪欲の評価関数",
-    "text": "貪欲の評価関数\n\nコスト: 問題分にある計算式でのコスト\nベースコスト: (単語間の移動コストを無視して)単語のみを考えた場合のコスト\n\nこれはコストの下界になっている\n\n\n評価関数を コスト - ベースコスト とすることで余分な移動量を評価できる。\n評価関数がこれだけだとベースコストの大きさが考慮されない？"
-  },
-  {
-    "objectID": "posts/2024-06-07_ahc028memo.html#ビームサーチ",
-    "href": "posts/2024-06-07_ahc028memo.html#ビームサーチ",
-    "title": "AHC028 解説放送メモ",
-    "section": "ビームサーチ",
-    "text": "ビームサーチ\n\n評価値: DP の最小値 - 使った単語のベースコストの和\n\nDP の最小値 は、DPテーブルから遷移先の最小値を選ぶことを繰り返して M 個目まで選択したときの最小値？ (推定コストの総和に該当？)\n1 度のコスト計算に O(M) はかかるので、単語数を減らしたほうがビーム幅を増やせる。\n\n単語のマージ\nbase(s1) + base(s2) &gt;= base(s1s2) + X であればマージする"
-  },
-  {
-    "objectID": "posts/2024-06-07_ahc028memo.html#焼きなまし",
-    "href": "posts/2024-06-07_ahc028memo.html#焼きなまし",
-    "title": "AHC028 解説放送メモ",
-    "section": "焼きなまし",
-    "text": "焼きなまし\n\n近傍\n\n単語の並びから 1 つとって、別の場所に挿入する\n有向グラフの TSP に一部分をまとめて移動させる近傍がある？ それを用いる\n\n反転操作が発生せず、向きが固定\n連続している部分は良い並びになっていることが多いはずだから、それを大きく崩さないような操作になっている"
-  },
-  {
-    "objectID": "posts/cudacheck.html",
-    "href": "posts/cudacheck.html",
-    "title": "gpu check",
-    "section": "",
-    "text": "import torch\ntorch.cuda.is_available()\n\nTrue\n\n\n\n!nvidia-smi\n\nMon Apr  3 22:00:02 2023       \n+-----------------------------------------------------------------------------+\n| NVIDIA-SMI 525.105.17   Driver Version: 525.105.17   CUDA Version: 12.0     |\n|-------------------------------+----------------------+----------------------+\n| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n|                               |                      |               MIG M. |\n|===============================+======================+======================|\n|   0  NVIDIA GeForce ...  Off  | 00000000:01:00.0  On |                  N/A |\n| 30%   28C    P8    26W / 250W |    349MiB / 11264MiB |      3%      Default |\n|                               |                      |                  N/A |\n+-------------------------------+----------------------+----------------------+\n                                                                               \n+-----------------------------------------------------------------------------+\n| Processes:                                                                  |\n|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |\n|        ID   ID                                                   Usage      |\n|=============================================================================|\n+-----------------------------------------------------------------------------+\n\n\n\n\n\nCopyrightCopyright tamuraup. 2024. All Rights Reserved"
-  },
-  {
-    "objectID": "posts/2024-05-03_ahc032memo.html",
-    "href": "posts/2024-05-03_ahc032memo.html",
-    "title": "AHC032 解説放送メモ",
-    "section": "",
-    "text": "解説放送みたメモ"
-  },
-  {
-    "objectID": "posts/2024-05-03_ahc032memo.html#解説放送メモ",
-    "href": "posts/2024-05-03_ahc032memo.html#解説放送メモ",
-    "title": "AHC032 解説放送メモ",
-    "section": "解説放送メモ",
-    "text": "解説放送メモ\n\n解説放送: https://www.youtube.com/watch?v=9JS0wXXNiZk\neijirou さん解法: https://atcoder.jp/contests/ahc032/submissions?f.User=eijirou\nwata さん解法: https://atcoder.jp/contests/ahc032/submissions/52151408"
-  },
-  {
-    "objectID": "posts/2024-05-03_ahc032memo.html#考察",
-    "href": "posts/2024-05-03_ahc032memo.html#考察",
-    "title": "AHC032 解説放送メモ",
-    "section": "考察",
-    "text": "考察\n\n3*3 のマスをすべて MOD*0.8 以上にするためには 5^9 通り候補がほしい\n\n(ランダムに与えられたスタンプで 1 マスを MOD*4/5 以上にできる確率 1/5)\n\n近傍がなめらかでないので、焼きなましなどの局所探索は不適\n同じ 9 マスを操作するなら、左上の点は分散させたほうが場合の数が増える"
-  },
-  {
-    "objectID": "posts/2024-05-03_ahc032memo.html#ビームサーチ",
-    "href": "posts/2024-05-03_ahc032memo.html#ビームサーチ",
-    "title": "AHC032 解説放送メモ",
-    "section": "ビームサーチ",
-    "text": "ビームサーチ\n\n評価関数: \\(確定スコア + K * MOD * (1 - 進行度) * 残りの操作回数\\) (\\(K\\) はハイパーパラメータ)\n\n進行度が小さい場合は、後でより上手く揃えられるように操作回数を残したい\n\n\n\n「操作回数別でビームを分ける」とは\nwata さんの実装では操作回数別でビームを分けている。\nここでいうビームサーチは幅優先のビームサーチで「確定マス数」が深さに対応する。\n確定マス数を C とする。これを操作回数の基準として \\(\\pm W\\) 回の操作回数のズレを許容し、そのズレ幅ごとにビームをもつ。\n(例: コードの beam[W] はズレ幅 0 のビーム)\n\n\n揃えるマスの順\n35:30\n\n揃える順序は 3 マス揃えが連続しないほうが良い\nビームサーチの「確定スコア/確定マス数」を可視化することで確認している"
-  },
-  {
-    "objectID": "posts/2024-05-03_ahc032memo.html#高速化",
-    "href": "posts/2024-05-03_ahc032memo.html#高速化",
-    "title": "AHC032 解説放送メモ",
-    "section": "高速化",
-    "text": "高速化\n\n不要なスタンプをできるだけ減らす工夫をしている\nスタンプを右上の値で分類し、右上マスを良い値にできるスタンプの候補を絞り込めるようにするなど\n\n\nK 分木の話\nwata さん実装の Searcher がそれ。\nやることは「3マス揃え」で話していることとほとんど同じ。\nMOD を K 個の区間に分けて、スタンプの 1 マス目の値で K 分割、2 マス目の値で K 分割 …\nのように分割する、木の深さが i マス目の分割となる K 分木を作り、良いスタンプの探索を高速にできるようにする。"
-  },
-  {
-    "objectID": "posts/2024-05-20_compute_delta.html",
-    "href": "posts/2024-05-20_compute_delta.html",
-    "title": "音声信号の “delta” という特徴量",
-    "section": "",
-    "text": "音声信号に delta という特徴量があるらしい。 Practical Cryptography\nあまり良くわかっていませんが、各周波数帯での軌跡を特徴量にするイメージでしょうか？ 各周波数帯のデータと [1.0] * time をたたみ込み演算をしたもの特徴量とするようです。\nkaggle でも過去の上位解法に使用されているようです。[4-th place solution] Inference and Training tips\nまた torchaudio にも実装されています。torchaudio.functional.compute_deltas — Torchaudio 2.2.0.dev20240520 documentation\n実装例"
-  },
-  {
-    "objectID": "posts/2024-05-20_compute_delta.html#一応演算結果確認しておく",
-    "href": "posts/2024-05-20_compute_delta.html#一応演算結果確認しておく",
-    "title": "音声信号の “delta” という特徴量",
-    "section": "一応演算結果確認しておく",
-    "text": "一応演算結果確認しておく\n\nimport numpy as np\nimport torch\n\n\n# kaggle の solution notebook より\ndef compute_deltas(\n        specgram: torch.Tensor, win_length: int = 5, mode: str = \"replicate\"\n) -&gt; torch.Tensor:\n    device = specgram.device\n    dtype = specgram.dtype\n\n    # pack batch\n    shape = specgram.size()\n    specgram = specgram.reshape(1, -1, shape[-1])\n\n    assert win_length &gt;= 3\n\n    n = (win_length - 1) // 2\n\n    # twice sum of integer squared\n    denom = n * (n + 1) * (2 * n + 1) / 3\n\n    specgram = torch.nn.functional.pad(specgram, (n, n), mode=mode)\n\n    kernel = torch.arange(-n, n + 1, 1, device=device, dtype=dtype).repeat(\n        specgram.shape[1], 1, 1\n    )\n    output = (\n            torch.nn.functional.conv1d(specgram, kernel, groups=specgram.shape[1]) / denom\n    )\n\n    # unpack batch\n    output = output.reshape(shape)\n\n    return output\n\n\nx=torch.rand([1, 10]) # dim (freq, time)\nprint(x.shape)\nprint(x)\n\ntorch.Size([1, 10])\ntensor([[0.6760, 0.4193, 0.8303, 0.1316, 0.1804, 0.4828, 0.7212, 0.0631, 0.1529,\n         0.5410]])\n\n\n\ndelta=compute_deltas(x)\nprint(delta.shape)\nprint(delta)\n\ntorch.Size([1, 10])\ntensor([[ 0.0052, -0.0934, -0.1279, -0.0523,  0.0133,  0.0404, -0.0475, -0.0452,\n          0.0117,  0.1344]])\n\n\n\nn=2\ntmp=torch.nn.functional.pad(x, (2, 2), mode='replicate')\ndenom = n * (n + 1) * (2 * n + 1) / 3\n\n\nfor p in range(n,n+10):\n    sm=0.0\n    for i in range(1,n+1):\n        sm+=(-tmp[0][p-i] +tmp[0][p+i])*i\n    print(sm/denom)\n\ntensor(0.0052)\ntensor(-0.0934)\ntensor(-0.1279)\ntensor(-0.0523)\ntensor(0.0133)\ntensor(0.0404)\ntensor(-0.0475)\ntensor(-0.0452)\ntensor(0.0117)\ntensor(0.1344)"
   }
 ]

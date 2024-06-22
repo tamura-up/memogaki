@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="第8回-問題4" class="level2">
 <h2 class="anchored" data-anchor-id="第8回-問題4">第8回 問題4</h2>
-<p>問題文に”設定”とあって何をするのかわかりにくいが、更新クエリを問われている。 <code>WITH</code> 句と<code>UPDATE</code> を一緒に使えることを知った。</p>
+<p>問題文に”設定”とあって何をするのかわかりにくいが、更新クエリを問われている。 副問合せを使った UPDATE 忘れていたので勉強になった。</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> item <span class="kw">SET</span> ITEM_POPULAR_RANK<span class="op">=</span><span class="dv">0</span>;</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> t1 <span class="kw">AS</span> (<span class="kw">SELECT</span> D.ITEM_CODE</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                 , <span class="fu">MAX</span>(ORDER_DATE) DT</span>
@@ -396,8 +396,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        ) rnk</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            <span class="kw">FROM</span> t1)</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> item</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> ITEM_POPULAR_RANK <span class="op">=</span> (<span class="kw">SELECT</span> t2.rnk <span class="kw">FROM</span> t2 <span class="kw">WHERE</span> t2.ITEM_CODE <span class="op">=</span> item.ITEM_CODE)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> item.ITEM_CODE <span class="kw">IN</span> (<span class="kw">SELECT</span> t2.ITEM_CODE <span class="kw">FROM</span> t2);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SET</span> ITEM_POPULAR_RANK <span class="op">=</span> t2.rnk</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> t2</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> t2.ITEM_CODE <span class="op">=</span> item.ITEM_CODE;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="第9回-問題4" class="level2">
 <h2 class="anchored" data-anchor-id="第9回-問題4">第9回 問題4</h2>
